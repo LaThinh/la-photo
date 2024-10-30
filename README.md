@@ -2,6 +2,15 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+Search Photos. Web App use Nextjs 15, TailwindCSS, Pixabay API, Pexels API
+
+![image](https://github.com/user-attachments/assets/92af692f-63b2-480b-beab-2822018b19c5)
+
+
+![image](https://github.com/user-attachments/assets/67ed234c-db37-4b9d-9a16-08cb63cea44b)
+
+Link Demo: https://photo.laquocthinh.com/
+
 First, run the development server:
 
 ```bash
