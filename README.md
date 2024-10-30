@@ -9,6 +9,9 @@ Search Photos. Web App use Nextjs 15, TailwindCSS, Pixabay API, Pexels API
 
 ![image](https://github.com/user-attachments/assets/67ed234c-db37-4b9d-9a16-08cb63cea44b)
 
+![image](https://github.com/user-attachments/assets/0ec06192-fdf3-42c9-8949-4cc3d34a023e)
+
+
 Link Demo: https://photo.laquocthinh.com/
 
 First, run the development server:
