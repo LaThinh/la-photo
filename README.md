@@ -6,13 +6,24 @@ Search Photos. Web App use Nextjs 15, TailwindCSS, Pixabay API, Pexels API
 
 ![image](https://github.com/user-attachments/assets/92af692f-63b2-480b-beab-2822018b19c5)
 
+![image](https://github.com/user-attachments/assets/dd9a4902-6089-4e58-89d1-4beacdc2afc7)
 
 ![image](https://github.com/user-attachments/assets/67ed234c-db37-4b9d-9a16-08cb63cea44b)
 
 ![image](https://github.com/user-attachments/assets/0ec06192-fdf3-42c9-8949-4cc3d34a023e)
 
+![image](https://github.com/user-attachments/assets/e6ad008a-aaf9-4f5c-85ad-440852889580)
 
 Link Demo: https://photo.laquocthinh.com/
+
+## Google Speed
+Link Result: https://pagespeed.web.dev/analysis/https-photo-laquocthinh-com/oostgt4j5m?form_factor=mobile 
+
+### Mobile
+![image](https://github.com/user-attachments/assets/b4055746-47ab-49e6-b245-b0d0ed2a879d)
+
+### Desktop
+![image](https://github.com/user-attachments/assets/dcca7e25-99d5-4b70-9a83-f04427bb3e1b)
 
 First, run the development server:
 
