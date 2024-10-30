@@ -3,19 +3,41 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+	--background: #ffffff;
+	--foreground: #171717;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+	:root {
+		--background: #0a0a0a;
+		--foreground: #ededed;
+	}
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+	color: var(--foreground);
+	background: var(--background);
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+	@apply mx-auto px-3 lg:px-4 xl:px-5;
+}
+
+.image-source {
+	/* @apply left-3; */
+}
+.brand-logo {
+	@apply h-9 flex items-center rounded-full;
+}
+
+.brand-logo .brand-name {
+	@apply transition-all w-0  overflow-hidden;
+}
+
+.brand-logo:hover {
+	@apply bg-white/80 gap-2;
+}
+.brand-logo:hover .brand-name {
+	@apply w-auto pr-5;
 }
