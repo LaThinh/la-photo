@@ -1,19 +1,32 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+// import localFont from "next/font/local";
 import "./globals.css";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import { ScrollToTop } from "./components/ScrollToTop";
+import { Jost, Playwrite_VN } from "next/font/google";
 
-const geistSans = localFont({
-	src: "./fonts/GeistVF.woff",
-	variable: "--font-geist-sans",
-	weight: "100 900",
+// const geistSans = localFont({
+// 	src: "./fonts/GeistVF.woff",
+// 	variable: "--font-geist-sans",
+// 	weight: "100 900",
+// });
+// const geistMono = localFont({
+// 	src: "./fonts/GeistMonoVF.woff",
+// 	variable: "--font-geist-mono",
+// 	weight: "100 900",
+// });
+
+const playWrite = Playwrite_VN({
+	variable: "--play-write",
+	display: "swap",
+	weight: ["300", "400"],
 });
-const geistMono = localFont({
-	src: "./fonts/GeistMonoVF.woff",
-	variable: "--font-geist-mono",
-	weight: "100 900",
+
+const jost = Jost({
+	subsets: ["latin"],
+	variable: "--font-jost",
+	weight: ["300", "400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -30,7 +43,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+			<body className={`${jost.className} ${playWrite.className} antialiased`}>
 				<Header />
 				<div className="main min-h-[calc(100vh-160px)]">{children}</div>
 				<ScrollToTop />

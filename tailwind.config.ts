@@ -16,6 +16,9 @@ const config: Config = {
 				foreground: "var(--foreground)",
 				primary: "#22c55e",
 			},
+			fontFamily: {
+				playWrite: ["Playwrite VN"],
+			},
 		},
 	},
 	plugins: [],

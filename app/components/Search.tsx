@@ -8,12 +8,18 @@ import { keywords } from "../lib/keyword";
 
 export const revalidate = 3600;
 
-export default function SearchComponent({ q }: { q?: string }) {
-	const [query, setQuery] = useState(q || "Paris");
+export default function SearchComponent({
+	q,
+	defaultPhotos,
+}: {
+	q?: string;
+	defaultPhotos?: IPhoto[];
+}) {
+	const [query, setQuery] = useState(q);
 	const [pexelsResult, setPexelsResult] = useState<IPexelsResult>();
 	const [pixabayResult, setPixabayResult] = useState<IPixabayResult>();
 
-	const [photos, setPhotos] = useState<IPhoto[]>([]);
+	const [photos, setPhotos] = useState<IPhoto[]>(defaultPhotos || []);
 	const [keyword, setKeyword] = useState("");
 	const [loading, setLoading] = useState(false);
 	const [total, setTotal] = useState(0);
@@ -35,12 +41,11 @@ export default function SearchComponent({ q }: { q?: string }) {
 	const handleClickKeyword = (keyword: string) => {
 		setQuery(keyword);
 		setKeyword(keyword);
-		// handleSearch();
 	};
 
 	const handleSearch = async (event?: any) => {
-		console.log("Handle Search " + query);
-		if (!query && query.length < 2) return;
+		//console.log("Handle Search " + query);
+		if (!query || query.length < 2) return;
 
 		if (event) {
 			event.preventDefault();
@@ -67,12 +72,10 @@ export default function SearchComponent({ q }: { q?: string }) {
 
 		setPexelsResult(resPexels);
 		setPixabayResult(resPixabay);
+		setLoading(false);
 	};
 
 	useEffect(() => {
-		// console.log("Use effect Get Search Results");
-		// console.log(pexelsResult);
-		// console.log(pixabayResult);
 		if (!pexelsResult?.photos || !pixabayResult?.hits) {
 			return;
 		}
@@ -83,7 +86,11 @@ export default function SearchComponent({ q }: { q?: string }) {
 	}, [pexelsResult, pixabayResult]);
 
 	useEffect(() => {
-		setTimeout(handleSearch, 2000);
+		if (keyword != "") {
+			setTimeout(function () {
+				handleSearch();
+			}, 2000);
+		}
 	}, [keyword]);
 
 	return (
@@ -91,7 +98,7 @@ export default function SearchComponent({ q }: { q?: string }) {
 			<div className="search-area relative w-full min-h-72 flex flex-col items-center p-5 justify-center bg-slate-200">
 				<div
 					className="search-bg absolute left-1/2 w-full max-w-[2400px] -translate-x-1/2 top-0 bottom-0 z-0 
-				bg-yellow-500 overflow-hidden flex items-center"
+				bg-yellow-500 overflow-hidden  flex items-center"
 				>
 					{photos.length > 0 && (
 						<Image
@@ -102,7 +109,7 @@ export default function SearchComponent({ q }: { q?: string }) {
 							height="300"
 							alt=""
 							priority
-							className="object-cover"
+							className="object-cover min-h-72"
 						/>
 					)}
 				</div>
@@ -129,11 +136,11 @@ export default function SearchComponent({ q }: { q?: string }) {
 						</button>
 					</div>
 
-					<div className="field-row keywords flex gap-2 text-white text-xs">
+					<div className="field-row keywords flex gap-2 gap-y-1 flex-wrap text-white text-xs">
 						{keywords.map((keyword, index) => (
 							<a
 								key={index}
-								className="keyword cursor-pointer hover:underline"
+								className="keyword cursor-pointer hover:underline text-nowrap"
 								onClick={() => handleClickKeyword(keyword)}
 							>
 								{keyword}
@@ -143,18 +150,26 @@ export default function SearchComponent({ q }: { q?: string }) {
 				</form>
 			</div>
 
-			<div className="search-results w-full mx-auto max-w-[2400px] mb-20">
-				{loading && <div>Loading ...</div>}
+			<div className="search-results w-full mx-auto  max-w-[2400px] mb-20">
+				{loading && (
+					<div className="loading w-full mx-auto flex items-center justify-center min-h-96 min-w-96 ">
+						<span className="loader"></span>
+					</div>
+				)}
 				{photos.length > 0 && (
 					<>
-						<div className="result-static min-h-20 flex items-center">
-							{total > 0 && (
-								<h3 className="font-bold text-lg lg:text-xl text-gray-500 w-full text-center">
-									Results for {`"${query}" :`} {photos.length}
-									{"/"}
-									{total} Items
-								</h3>
-							)}
+						<div className="result-static min-h-14 lg:min-h-20 flex items-center">
+							<h3 className="text-lg lg:text-xl text-gray-500 w-full text-center font-semibold">
+								{total > 0 ? (
+									<span className="">
+										Results for {`"${query}" :`} {photos.length}
+										{"/"}
+										{total} Items
+									</span>
+								) : (
+									"Welcome to La Photos"
+								)}
+							</h3>
 						</div>
 
 						<div className="result-grid">
