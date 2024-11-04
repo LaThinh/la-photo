@@ -4,7 +4,10 @@ import React, { useEffect, useState } from "react";
 import { IPexelsResult, IPhoto, IPixabayResult } from "@lib/interface";
 import PhotoGrid from "./PhotoGrid";
 import Image from "next/image";
-import { keywords } from "../lib/keyword";
+import { keywords } from "@lib/keyword";
+import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
+const AnimationScript = dynamic(() => import("@components/AnimationScript"), { ssr: false });
 
 export const revalidate = 3600;
 
@@ -15,7 +18,7 @@ export default function SearchComponent({
 	q?: string;
 	defaultPhotos?: IPhoto[];
 }) {
-	const [query, setQuery] = useState(q);
+	const [search, setSearch] = useState(q);
 	const [pexelsResult, setPexelsResult] = useState<IPexelsResult>();
 	const [pixabayResult, setPixabayResult] = useState<IPixabayResult>();
 
@@ -24,35 +27,28 @@ export default function SearchComponent({
 	const [loading, setLoading] = useState(false);
 	const [total, setTotal] = useState(0);
 
-	// useEffect(() => {
-	// 	const getCurated = async () => {
-	// 		const resCurated = await fetch("/api/pexels/curated", {
-	// 			method: "GET",
-	// 			next: { revalidate: 3600, tags: ["curated"] },
-	// 		})
-	// 			.then((r) => r.json())
-	// 			.finally(() => setLoading(false));
-
-	// 		setPhotos(resCurated.photos);
-	// 	};
-	// 	getCurated();
-	// }, []);
+	const router = useRouter();
 
 	const handleClickKeyword = (keyword: string) => {
-		setQuery(keyword);
+		// setQuery(keyword);
 		setKeyword(keyword);
 	};
 
-	const handleSearch = async (event?: any) => {
+	const handleSumbit = (event: any) => {
+		event.preventDefault();
+		router.push(`/search/${encodeURIComponent(search || "")}`);
+		handleSearch(search);
+	};
+
+	const handleSearch = async (query?: string) => {
 		//console.log("Handle Search " + query);
 		if (!query || query.length < 2) return;
 
-		if (event) {
-			event.preventDefault();
-		}
 		setLoading(true);
 		setPhotos([]);
 		setTotal(0);
+
+		setSearch(query);
 
 		const resPexels = await fetch("/api/pexels/search", {
 			method: "POST",
@@ -75,6 +71,18 @@ export default function SearchComponent({
 		setLoading(false);
 	};
 
+	// useEffect(() => {
+	// 	if (q) {
+	// 		handleSearch(q);
+	// 	}
+	// }, [q]);
+
+	useEffect(() => {
+		if (photos && photos.length > 0) {
+			localStorage.setItem("jsonPhotos", JSON.stringify(photos));
+		}
+	}, [photos]);
+
 	useEffect(() => {
 		if (!pexelsResult?.photos || !pixabayResult?.hits) {
 			return;
@@ -86,11 +94,7 @@ export default function SearchComponent({
 	}, [pexelsResult, pixabayResult]);
 
 	useEffect(() => {
-		if (keyword != "") {
-			setTimeout(function () {
-				handleSearch();
-			}, 2000);
-		}
+		handleSearch(keyword);
 	}, [keyword]);
 
 	return (
@@ -114,7 +118,8 @@ export default function SearchComponent({
 					)}
 				</div>
 				<form
-					onSubmit={handleSearch}
+					// action={`/search?q=photo${search}`}
+					onSubmit={handleSumbit}
 					className="search-form relative z-20 flex flex-col w-full max-w-[560px] gap-2 justify-center h-12"
 				>
 					<div className="field-row flex gap-2">
@@ -122,8 +127,8 @@ export default function SearchComponent({
 							<input
 								type="text"
 								id="search"
-								value={query}
-								onChange={(e) => setQuery(e.target.value)}
+								value={search || ""}
+								onChange={(e) => setSearch(e.target.value)}
 								placeholder="What image are you looking for?"
 								className="border bg-white w-full border-1 text-lg lg:text-xl rounded-xl h-12 px-3"
 							/>
@@ -138,13 +143,14 @@ export default function SearchComponent({
 
 					<div className="field-row keywords flex gap-2 gap-y-1 flex-wrap text-white text-xs">
 						{keywords.map((keyword, index) => (
-							<a
+							<div
 								key={index}
+								title={keyword}
 								className="keyword cursor-pointer hover:underline text-nowrap"
 								onClick={() => handleClickKeyword(keyword)}
 							>
 								{keyword}
-							</a>
+							</div>
 						))}
 					</div>
 				</form>
@@ -159,10 +165,10 @@ export default function SearchComponent({
 				{photos.length > 0 && (
 					<>
 						<div className="result-static min-h-14 lg:min-h-20 flex items-center">
-							<h3 className="text-lg lg:text-xl text-gray-500 w-full text-center font-semibold">
+							<h3 className="text-xl lg:text-2xl text-gray-600 w-full text-center font-semibold">
 								{total > 0 ? (
 									<span className="">
-										Results for {`"${query}" :`} {photos.length}
+										Results for {`"${search}" :`} {photos.length}
 										{"/"}
 										{total} Items
 									</span>
@@ -178,6 +184,8 @@ export default function SearchComponent({
 					</>
 				)}
 			</div>
+
+			<AnimationScript />
 		</div>
 	);
 }

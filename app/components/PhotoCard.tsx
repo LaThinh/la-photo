@@ -22,15 +22,17 @@ export default function PhotoCard({ photo }: { photo: IPhoto }) {
 	}
 
 	return (
-		<div className="photo-card group ">
+		<div className="photo-card group animation">
 			<div className="card-body relative min-h-36 bg-gray-300">
-				<Image
-					width={photo?.width || photo?.imageWidth || "200"}
-					height={photo?.height || photo?.imageHeight || "200"}
-					alt={photo?.alt || photo?.tags || "Photo Image"}
-					src={photo?.src?.large || photo?.webformatURL || "/default.png"}
-					className="min-h-36 object-cover"
-				/>
+				<Link href={`/photo/${photo.id}`}>
+					<Image
+						width={photo?.width || photo?.imageWidth || "200"}
+						height={photo?.height || photo?.imageHeight || "200"}
+						alt={photo?.alt || photo?.tags || "Photo Image"}
+						src={photo?.src?.large || photo?.webformatURL || "/default.png"}
+						className="min-h-36 object-cover"
+					/>
+				</Link>
 				<div className="image-source absolute transition-all top-2 -left-16 group-hover:left-2 aspect-square">
 					<Link
 						href={photo?.url || photo?.pageURL || "/"}

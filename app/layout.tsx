@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-import { ScrollToTop } from "./components/ScrollToTop";
-import { Jost, Playwrite_VN } from "next/font/google";
+import { Jost, Oswald } from "next/font/google";
+import ScrollToTop from "@components/ScrollToTop";
 
 // const geistSans = localFont({
 // 	src: "./fonts/GeistVF.woff",
@@ -17,10 +17,11 @@ import { Jost, Playwrite_VN } from "next/font/google";
 // 	weight: "100 900",
 // });
 
-const playWrite = Playwrite_VN({
-	variable: "--play-write",
+const oswald = Oswald({
+	variable: "--oswald",
 	display: "swap",
-	weight: ["300", "400"],
+	weight: ["300", "400", "500", "600", "700"],
+	subsets: ["latin", "vietnamese"],
 });
 
 const jost = Jost({
@@ -43,9 +44,9 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={`${jost.className} ${playWrite.className} antialiased`}>
+			<body className={`${jost.className} ${oswald.className} antialiased`}>
 				<Header />
-				<div className="main min-h-[calc(100vh-160px)]">{children}</div>
+				<div className="main min-h-[calc(100vh-80px)]">{children}</div>
 				<ScrollToTop />
 				<Footer />
 			</body>

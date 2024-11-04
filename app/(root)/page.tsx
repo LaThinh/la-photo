@@ -1,6 +1,6 @@
 import { createClient } from "pexels";
-import SearchComponent from "./components/Search";
-import { IPhoto } from "./lib/interface";
+import SearchComponent from "../components/Search";
+import { IPhoto } from "../lib/interface";
 
 export default async function Home() {
 	const query = "Paris";
