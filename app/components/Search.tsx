@@ -1,37 +1,33 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { IPexelsResult, IPhoto, IPixabayResult } from "@lib/interface";
-import PhotoGrid from "./PhotoGrid";
+import { IPexelsResult, IPhoto, IPixabayResult, ISearchResult } from "@/app/libs/interface";
+
 import Image from "next/image";
-import { keywords } from "@lib/keyword";
+import { keywords } from "@/app/libs/keyword";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
+import PhotoGrid from "@components/photo/PhotoGrid";
 const AnimationScript = dynamic(() => import("@components/AnimationScript"), { ssr: false });
 
 export const revalidate = 3600;
 
-export default function SearchComponent({
-	q,
-	defaultPhotos,
-}: {
-	q?: string;
-	defaultPhotos?: IPhoto[];
-}) {
-	const [search, setSearch] = useState(q);
+export default function SearchComponent({ q, result }: { q?: string; result?: ISearchResult }) {
+	const [search, setSearch] = useState(q || "");
 	const [pexelsResult, setPexelsResult] = useState<IPexelsResult>();
 	const [pixabayResult, setPixabayResult] = useState<IPixabayResult>();
 
-	const [photos, setPhotos] = useState<IPhoto[]>(defaultPhotos || []);
-	const [keyword, setKeyword] = useState("");
+	const [photos, setPhotos] = useState<IPhoto[]>(result?.photos || []);
+	// const [keyword, setKeyword] = useState("");
 	const [loading, setLoading] = useState(false);
-	const [total, setTotal] = useState(0);
+	const [total, setTotal] = useState(result?.total || 0);
 
 	const router = useRouter();
 
 	const handleClickKeyword = (keyword: string) => {
 		// setQuery(keyword);
-		setKeyword(keyword);
+		router.push(`/search/${encodeURIComponent(keyword || "")}`);
+		// setKeyword(keyword);
 	};
 
 	const handleSumbit = (event: any) => {
@@ -93,9 +89,9 @@ export default function SearchComponent({
 		setTotal(pexelsResult.total_results + pixabayResult.total);
 	}, [pexelsResult, pixabayResult]);
 
-	useEffect(() => {
-		handleSearch(keyword);
-	}, [keyword]);
+	// useEffect(() => {
+	// 	handleSearch(keyword);
+	// }, [keyword]);
 
 	return (
 		<div className="search-page w-full">
@@ -127,7 +123,7 @@ export default function SearchComponent({
 							<input
 								type="text"
 								id="search"
-								value={search || ""}
+								value={search}
 								onChange={(e) => setSearch(e.target.value)}
 								placeholder="What image are you looking for?"
 								className="border bg-white w-full border-1 text-lg lg:text-xl rounded-xl h-12 px-3"
@@ -135,7 +131,7 @@ export default function SearchComponent({
 						</div>
 						<button
 							type="submit"
-							className="btn btn-primary bg-green-600 text-white font-bold px-5 py-1 rounded-xl hover:opacity-90"
+							className="btn btn-primary font-Oswald bg-green-700 tracking-wider text-white text-xl px-5 py-1 rounded-xl hover:bg-green-600"
 						>
 							Search
 						</button>
@@ -156,7 +152,7 @@ export default function SearchComponent({
 				</form>
 			</div>
 
-			<div className="search-results w-full mx-auto  max-w-[2400px] mb-20">
+			<div className="search-results w-full mx-auto flex flex-col justify-center max-w-[2400px] mb-20">
 				{loading && (
 					<div className="loading w-full mx-auto flex items-center justify-center min-h-96 min-w-96 ">
 						<span className="loader"></span>
@@ -166,7 +162,7 @@ export default function SearchComponent({
 					<>
 						<div className="result-static min-h-14 lg:min-h-20 flex items-center">
 							<h3 className="text-xl lg:text-2xl text-gray-600 w-full text-center font-semibold">
-								{total > 0 ? (
+								{search.length > 0 ? (
 									<span className="">
 										Results for {`"${search}" :`} {photos.length}
 										{"/"}

@@ -1,8 +1,8 @@
 import React from "react";
-import { IPhoto } from "@lib/interface";
+import { IPhoto } from "@/app/libs/interface";
 import PhotoCard from "./PhotoCard";
 
-export default function PhotoGrid({ photos }: { photos?: IPhoto[] }) {
+export default function PhotoList({ photos }: { photos?: IPhoto[] }) {
 	// console.log(photos);
 	return (
 		<div

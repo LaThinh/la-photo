@@ -1,5 +1,5 @@
 import React from "react";
-import { IPexelPhoto } from "@lib/interface";
+import { IPexelPhoto } from "@/app/libs/interface";
 import Image from "next/image";
 
 export default function PhotoCard({ photo }: { photo: IPexelPhoto }) {

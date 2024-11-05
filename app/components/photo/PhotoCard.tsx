@@ -1,8 +1,9 @@
 import React from "react";
-import { ImageSource, IPhoto } from "@lib/interface";
+import { ImageSource, IPhoto } from "@/app/libs/interface";
 import Image from "next/image";
 import Link from "next/link";
 import { LuDownload } from "react-icons/lu";
+import { getPhotoOrientation } from "@libs/utils";
 
 export default function PhotoCard({ photo }: { photo: IPhoto }) {
 	const source: ImageSource = photo?.url ? ImageSource.Pexels : ImageSource.Pixabay;
@@ -21,8 +22,10 @@ export default function PhotoCard({ photo }: { photo: IPhoto }) {
 			break;
 	}
 
+	const photoOrient = getPhotoOrientation(photo);
+
 	return (
-		<div className="photo-card group animation">
+		<div className={`photo-card ${photoOrient} group animation`}>
 			<div className="card-body relative min-h-36 bg-gray-300">
 				<Link href={`/photo/${photo.id}`}>
 					<Image
@@ -72,9 +75,20 @@ export default function PhotoCard({ photo }: { photo: IPhoto }) {
 			</div>
 			<div className="card-footer transition-all absolute left-0 right-0 -bottom-20 group-hover:bottom-0">
 				<div className="h-8 lg:h-12 flex items-center justify-between bg-slate-200/70 backdrop-blur-sm px-2">
-					<strong className="text-[11px] lg:text-xs font-playWrite">
-						{photo?.photographer || photo?.user}
-					</strong>
+					<div className="photographer flex gap-2 items-center">
+						{photo?.userImageURL && (
+							<Image
+								src={photo?.userImageURL}
+								alt={photo?.user || "User Photo"}
+								width="96"
+								height="96"
+								className="object-cover w-9 h-9 rounded-full"
+							/>
+						)}
+						<strong className="text-[11px] lg:text-xs font-playWrite">
+							{photo?.photographer || photo?.user}
+						</strong>
+					</div>
 
 					{photo?.avg_color && (
 						<div

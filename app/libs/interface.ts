@@ -95,3 +95,14 @@ export enum ImageSource {
 	Pexels = "pexels",
 	Unsplash = "unsplash",
 }
+
+export enum EPhotoOrientation {
+	Landscape = "landscape",
+	Portrait = "portrait",
+	Square = "square",
+}
+
+export interface ISearchResult {
+	total: number;
+	photos: IPhoto[];
+}

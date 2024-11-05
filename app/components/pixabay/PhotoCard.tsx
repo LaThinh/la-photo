@@ -1,5 +1,5 @@
 import React from "react";
-import { IPixabayPhoto } from "@lib/interface";
+import { IPixabayPhoto } from "@/app/libs/interface";
 import Image from "next/image";
 
 export default function PixabayPhotoCard({ photo }: { photo: IPixabayPhoto }) {
