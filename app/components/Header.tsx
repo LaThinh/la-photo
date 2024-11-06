@@ -1,15 +1,23 @@
 import Link from "next/link";
 import React from "react";
+import FormSearch from "./FormSearch";
 
 export default function Header() {
 	return (
-		<header className="header sticky top-0 z-50 bg-white/70 backdrop-blur-lg">
-			<div className="container px-3 lg:px-5 h-14 lg:h-16 flex items-center">
-				<div className="header-logo text-lg lg:text-2xl">
+		<header className="header sticky top-0 z-50 bg-white/70 backdrop-blur-lg shadow-lg">
+			<div className="w-full max-w-[1800px] mx-auto px-3 lg:px-5 h-14 lg:h-16 flex items-center justify-between">
+				<div className="header-logo min-w-28 text-lg lg:text-2xl">
 					<Link href="/" className="font-playWrite font-bold text-gradient py-2">
 						La Photo
 					</Link>
 				</div>
+				<div
+					id="header-search"
+					className="flex header-search flex-1 justify-center items-center"
+				>
+					<FormSearch />
+				</div>
+				<div className=" header-right lg:min-w-28"></div>
 			</div>
 		</header>
 	);

@@ -25,3 +25,8 @@ export function getPhotoOrientation(photo: IPhoto): string {
 
 	return photoOrientation;
 }
+
+export function getRandomIndex(length: number): number {
+	const maxLength = Math.min(length, 50);
+	return Math.floor(Math.random() * maxLength);
+}

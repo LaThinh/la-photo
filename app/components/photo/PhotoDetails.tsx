@@ -31,16 +31,16 @@ export default function PhotoDetails({ photoId }: { photoId: string }) {
 	}, [jsonData]);
 
 	return (
-		<div className="photo-detail">
+		<div className="photo-detail ">
 			{photo && (
 				<div className="photo-box flex gap-0 flex-col lg:flex-row">
-					<div className="photo-image flex-1 flex justify-center bg-slate-300">
+					<div className="photo-image flex-1 flex justify-center min-h-[50vh] bg-slate-900">
 						<Image
 							width={photo?.width || photo?.imageWidth || "700"}
 							height={photo?.height || photo?.imageHeight || "700"}
 							alt={photo?.alt || photo?.tags || "Photo Image"}
 							src={photo?.src?.large2x || photo?.largeImageURL || "/default.png"}
-							className="bg-slate-300 min-h-36 object-cover h-full w-auto max-h-[90vh]"
+							className="bg-slate-300 min-h-36 object-cover h-full w-auto max-h-[98vh]"
 						/>
 					</div>
 

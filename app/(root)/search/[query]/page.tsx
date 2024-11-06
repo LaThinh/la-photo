@@ -1,5 +1,6 @@
 import { getSearchPhotos } from "@/app/services/photoSearch";
-import SearchComponent from "@components/Search";
+import SearchComponent from "@components/SearchComponent";
+// import SearchComponent from "@components/Search";
 
 import React from "react";
 

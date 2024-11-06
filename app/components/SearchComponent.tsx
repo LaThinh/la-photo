@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { IPhoto, ISearchResult } from "@/app/libs/interface";
 
 import Image from "next/image";
@@ -12,19 +12,19 @@ import { Button } from "@/components/ui/button";
 import Loading from "./Loading";
 import { CiGrid2V, CiGrid42 } from "react-icons/ci";
 import PhotoList from "./photo/PhotoList";
+import { getRandomIndex } from "@libs/utils";
 const AnimationScript = dynamic(() => import("@components/AnimationScript"), { ssr: false });
 
 export const revalidate = 3600;
 
-export default function Search({ q, result }: { q?: string; result?: ISearchResult }) {
+export default function SearchComponent({ q, result }: { q?: string; result?: ISearchResult }) {
 	const [search, setSearch] = useState(q || "");
-	//const [pexelsResult, setPexelsResult] = useState<IPexelsResult>();
-	//const [pixabayResult, setPixabayResult] = useState<IPixabayResult>();
+	const formRef = useRef(null);
 
 	const [photos, setPhotos] = useState<IPhoto[]>(result?.photos || []);
+	const [photoIndex, setPhotoIndex] = useState(result?.total ? getRandomIndex(result.total) : 0);
 	const [loading, setLoading] = useState(true);
 	const [gridView, setGridView] = useState("list");
-	// const [total, setTotal] = useState(result?.total || 0);
 
 	const router = useRouter();
 
@@ -36,64 +36,43 @@ export default function Search({ q, result }: { q?: string; result?: ISearchResu
 		event.preventDefault();
 		setPhotos([]);
 		router.push(`/search/${encodeURIComponent(search || "")}`);
-		// handleSearch(search);
 	};
 
 	const handleChangeGridView = (view: string) => {
 		setGridView(view);
 	};
 
-	// const handleSearch = async (query?: string) => {
-	// 	//console.log("Handle Search " + query);
-	// 	if (!query || query.length < 2) return;
-
-	// 	setLoading(true);
-	// 	setPhotos([]);
-	// 	setTotal(0);
-
-	// 	setSearch(query);
-
-	// 	const resPexels = await fetch("/api/pexels/search", {
-	// 		method: "POST",
-	// 		body: JSON.stringify({ query }),
-	// 		next: { revalidate: 3600 },
-	// 	})
-	// 		.then((r) => r.json())
-	// 		.finally(() => setLoading(false));
-
-	// 	const resPixabay = await fetch("/api/pixabay/search", {
-	// 		method: "POST",
-	// 		body: JSON.stringify({ query }),
-	// 		next: { revalidate: 3600 },
-	// 	})
-	// 		.then((r) => r.json())
-	// 		.finally(() => setLoading(false));
-
-	// 	setPexelsResult(resPexels);
-	// 	setPixabayResult(resPixabay);
-	// 	setLoading(false);
-	// };
-
 	useEffect(() => {
 		if (photos && photos.length > 0) {
 			localStorage.setItem("jsonPhotos", JSON.stringify(photos));
+			setPhotoIndex(getRandomIndex(photos.length));
 		}
 		setLoading(false);
 	}, [photos]);
 
-	// useEffect(() => {
-	// 	if (!pexelsResult?.photos || !pixabayResult?.hits) {
-	// 		return;
-	// 	}
-	// 	//if (photos.indexOf(pexelsResult?.photos[0], 0) >= 0) return;
+	useEffect(() => {
+		const headerSearch = document.querySelector("#header-search");
+		const observer = new IntersectionObserver((entries) => {
+			const entry = entries[0];
+			if (entry.isIntersecting) {
+				// Element is in viewport
+				headerSearch?.classList.add("hidden");
+			} else {
+				// Element is not in viewport
+				headerSearch?.classList.remove("hidden");
+			}
+		});
 
-	// 	setPhotos([...pexelsResult.photos, ...pixabayResult.hits]);
-	// 	setTotal(pexelsResult.total_results + pixabayResult.total);
-	// }, [pexelsResult, pixabayResult]);
+		if (formRef.current) {
+			headerSearch?.classList.add("hidden");
 
-	// useEffect(() => {
-	// 	handleSearch(keyword);
-	// }, [keyword]);
+			observer.observe(formRef.current);
+		}
+
+		return () => {
+			observer.disconnect();
+		};
+	}, [formRef]);
 
 	return (
 		<div className="search-page w-full">
@@ -102,12 +81,12 @@ export default function Search({ q, result }: { q?: string; result?: ISearchResu
 					className="search-bg absolute left-1/2 w-full max-w-[2400px] -translate-x-1/2 top-0 bottom-0 z-0 
 				bg-yellow-500 overflow-hidden  flex items-center"
 				>
-					{photos.length > 0 && (
+					{photos.length > 0 && photoIndex < photos.length - 1 && (
 						<>
 							<Image
 								src={
-									photos[0].src?.landscape ||
-									photos[0].webformatURL ||
+									photos[photoIndex].src?.landscape ||
+									photos[photoIndex].webformatURL ||
 									"/default.png"
 								}
 								width="3000"
@@ -116,14 +95,17 @@ export default function Search({ q, result }: { q?: string; result?: ISearchResu
 								priority
 								className="object-cover min-h-72 absolute z-10"
 							/>
-							<div className="background-overlay absolute z-20 bg-gray-900/50 top-0 left-0 right-0 bottom-0"></div>
+							<div className="background-overlay absolute z-20 bg-gray-900/50 top-0 left-0 right-0 bottom-0">
+								{photoIndex}
+							</div>
 						</>
 					)}
 				</div>
 				<form
 					// action={`/search?q=photo${search}`}
 					onSubmit={handleSumbit}
-					className="search-form relative  z-20 flex flex-col w-full max-w-[560px] gap-2 justify-center h-12"
+					ref={formRef}
+					className="search-form relative  z-20 flex flex-col w-full max-w-[540px] gap-2 justify-center h-12"
 				>
 					<div className="field-row flex gap-0">
 						<div className="form-control flex-1">
@@ -139,7 +121,7 @@ export default function Search({ q, result }: { q?: string; result?: ISearchResu
 						</div>
 						<Button
 							type="submit"
-							className="btn btn-primary h-full rounded-r-full min-w-32 text-xl hover:bg-green-700"
+							className="btn btn-primary h-full rounded-r-full px-3 lg:px-6 text-xl hover:bg-green-700"
 						>
 							<span>Search</span>
 						</Button>
