@@ -152,10 +152,14 @@ export default function PhotoDetails({ photoId }: { photoId: string }) {
 							<Button asChild>
 								<Link
 									className="download bg-green-700 flex gap-3 !rounded-full text-xl !h-12 px-7"
-									target="_blank"
+									// target="_blank"
 									title="Download Image"
 									download
-									href={photo?.largeImageURL || photo.src?.original || "/"}
+									href={
+										photo?.largeImageURL + "?attachment=" ||
+										photo.src?.original + "?attachment=" ||
+										"/"
+									}
 								>
 									<LuDownloadCloud className="!w-7 !h-7" />
 									<span>Download</span>
