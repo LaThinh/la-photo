@@ -28,7 +28,7 @@ export default function PhotoCard({ photo }: { photo: IPhoto }) {
 	return (
 		<div className={`photo-card ${photoOrient} group animation`}>
 			<div className="card-body relative min-h-36 bg-gray-300">
-				<Link href={`/photo/${photo.id}`}>
+				<Link href={`/photo/${photo.id}`} prefetch={false}>
 					<Image
 						width={photo?.width || photo?.imageWidth || "200"}
 						height={photo?.height || photo?.imageHeight || "200"}
@@ -60,6 +60,8 @@ export default function PhotoCard({ photo }: { photo: IPhoto }) {
 						className="download"
 						target="_blank"
 						title="Download Image"
+						download
+						prefetch={false}
 						href={photo?.largeImageURL || photo.src?.original || "/"}
 					>
 						<LuDownload />
