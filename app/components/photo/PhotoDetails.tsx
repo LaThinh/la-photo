@@ -67,10 +67,10 @@ export default function PhotoDetails({ photoId }: { photoId: string }) {
 		const handleTouch = (event: TouchEvent) => {
 			const deltaX = event.changedTouches[0].clientX - event.touches[0].clientX;
 
-			if (deltaX > 30) {
+			if (deltaX > 10) {
 				// Right swipe
 				if (nextRef && nextRef.current) nextRef.current.click();
-			} else if (deltaX < -30) {
+			} else if (deltaX < -10) {
 				// Left swipe
 				if (prevRef && prevRef.current) prevRef.current.click();
 			}
@@ -152,12 +152,12 @@ export default function PhotoDetails({ photoId }: { photoId: string }) {
 							<Button asChild>
 								<Link
 									className="download bg-green-700 flex gap-3 !rounded-full text-xl !h-12 px-7"
-									// target="_blank"
+									target="_blank"
 									title="Download Image"
 									download
 									href={
+										photo.src?.original ||
 										photo?.largeImageURL + "?attachment=" ||
-										photo.src?.original + "?attachment=" ||
 										"/"
 									}
 								>
