@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { LuDownload } from "react-icons/lu";
 import { getPhotoOrientation } from "@libs/utils";
+import Photographer from "./Photographer";
 
 export default function PhotoCard({ photo }: { photo: IPhoto }) {
 	const source: ImageSource = photo?.url ? ImageSource.Pexels : ImageSource.Pixabay;
@@ -74,7 +75,7 @@ export default function PhotoCard({ photo }: { photo: IPhoto }) {
 				)}
 			</div>
 			<div className="card-footer transition-all absolute left-0 right-0 -bottom-20 group-hover:bottom-0">
-				<div className="h-8 lg:h-12 flex items-center justify-between bg-slate-200/70 backdrop-blur-sm px-2">
+				<div className="h-8 lg:h-12 flex items-center justify-between bg-slate-700/50 text-white backdrop-blur-sm px-2">
 					<div className="photographer flex gap-2 items-center">
 						{photo?.userImageURL && (
 							<Image
@@ -85,18 +86,15 @@ export default function PhotoCard({ photo }: { photo: IPhoto }) {
 								className="object-cover w-9 h-9 rounded-full"
 							/>
 						)}
-						<strong className="text-[11px] lg:text-xs font-playWrite">
-							{photo?.photographer || photo?.user}
-						</strong>
+						{photo?.avg_color && (
+							<div
+								className="color w-6 lg:w-8 aspect-square rounded-full"
+								title={`Color: ${photo.avg_color}`}
+								style={{ backgroundColor: photo.avg_color }}
+							></div>
+						)}
+						<Photographer photo={photo} className="text-xs lg:text-sm xl:text-base" />
 					</div>
-
-					{photo?.avg_color && (
-						<div
-							className="color w-6 lg:w-8 aspect-square rounded-full"
-							title={`Color: ${photo.avg_color}`}
-							style={{ backgroundColor: photo.avg_color }}
-						></div>
-					)}
 				</div>
 			</div>
 		</div>

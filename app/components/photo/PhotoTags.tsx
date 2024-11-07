@@ -1,8 +1,6 @@
 import React from "react";
 
 export default function PhotoTags({ tags }: { tags: string }) {
-	console.log(tags);
-
 	const arrTags = tags.split(",");
 	if (!tags || arrTags.length < 1) return;
 

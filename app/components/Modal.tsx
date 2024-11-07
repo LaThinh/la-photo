@@ -18,7 +18,7 @@ export default function Modal({ children, title }: { children: React.ReactNode; 
 
 	return (
 		<Dialog defaultOpen={true} open={true} onOpenChange={handleOpenChange}>
-			<DialogContent className="max-w-[98vw] max-h-[98vh] lg:w-[90vw] lg:max-w-[1820px] p-0 border-none focus-visible:outline-0 !rounded-none overflow-hidden">
+			<DialogContent className="modal-photo max-w-[98vw] max-h-[98vh] lg:w-[90vw] lg:max-w-[1820px] p-0 border-none focus-visible:outline-0 !rounded-none overflow-hidden">
 				<DialogHeader className="hidden">
 					<DialogTitle>{title || ""}</DialogTitle>
 				</DialogHeader>

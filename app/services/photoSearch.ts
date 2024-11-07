@@ -41,7 +41,7 @@ export const getSearchPixabay = async (query: string, page?: number) => {
 export const getSearchPhotos = async (query: string, page?: number) => {
 	const resPexels = await getSearchPexels(query, page);
 	const resPixabay = await getSearchPixabay(query, page);
-
+	console.log("Search Query '" + decodeURIComponent(query + "'"));
 	// console.log(resPexels);
 	// console.log(resPixabay);
 
