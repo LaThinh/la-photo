@@ -49,7 +49,7 @@ export default function PhotoCard({ photo }: { photo: IPhoto }) {
 							width={36}
 							height={36}
 							alt={brandName}
-							className="rounded-full aspect-square w-6 lg:w-8"
+							className="rounded-full aspect-square w-6 lg:w-8 xl:w-9 xl:h-9"
 						/>
 						<div className="brand-name hover:underline">{brandName}</div>
 					</Link>
@@ -67,14 +67,20 @@ export default function PhotoCard({ photo }: { photo: IPhoto }) {
 						<LuDownload />
 					</Link>
 				</div>
-				{photo?.tags && (
+				{/* {photo?.tags && (
 					<div
 						className="tags absolute -bottom-48 group-hover:bottom-8 lg:group-hover:bottom-12 
 					text-white text-[10px] lg:text-sm bg-slate-700/50 px-2 py-1"
 					>
 						{photo.tags}
 					</div>
-				)}
+				)} */}
+				<div
+					className="tags absolute -right-72 transition-all duration-500 group-hover:right-0 group-hover:bottom-8 lg:group-hover:bottom-12 
+					text-white text-[11px] lg:text-sm bg-slate-700/50 px-2 py-1"
+				>
+					{photo?.alt || photo?.tags}
+				</div>
 			</div>
 			<div className="card-footer transition-all absolute left-0 right-0 -bottom-20 group-hover:bottom-0">
 				<div className="h-8 lg:h-12 flex items-center justify-between bg-slate-700/50 text-white backdrop-blur-sm px-2">
@@ -96,6 +102,11 @@ export default function PhotoCard({ photo }: { photo: IPhoto }) {
 							></div>
 						)}
 						<Photographer photo={photo} className="text-xs lg:text-sm xl:text-base" />
+					</div>
+					<div className="right-info">
+						{photo?.views && (
+							<span className="text-xs lg:text-sm">Views: {photo.views}</span>
+						)}
 					</div>
 				</div>
 			</div>

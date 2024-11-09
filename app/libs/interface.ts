@@ -56,6 +56,8 @@ export interface IPhoto {
 	likes?: number;
 	avg_color?: string;
 	comments?: number;
+	views?: number;
+	downloads?: number;
 
 	photographer?: string;
 	photographer_url?: string;

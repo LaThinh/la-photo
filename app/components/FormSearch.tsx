@@ -49,7 +49,7 @@ export default function FormSearch({ query }: { query?: string }) {
 	};
 
 	return (
-		<div className="form-search w-full mx-auto max-w-[540px]">
+		<div className="form-search w-full mx-auto max-w-[580px]">
 			<form
 				action={`/search/${encodeURIComponent(search || "")}`}
 				className="search-form relative z-20 flex flex-col w-full gap-2 

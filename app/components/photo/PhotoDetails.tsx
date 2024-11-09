@@ -99,39 +99,39 @@ export default function PhotoDetails({ photoId }: { photoId: string }) {
 						/>
 
 						<Button
-							className="prev p-0 rounded-full hover:bg-primary w-12 h-12 absolute left-2 top-1/2 z-20"
+							className="prev p-0 rounded-full hover:bg-primary w-10 h-10 absolute left-2 top-1/2 z-20"
 							variant={"ghost"}
 							ref={prevRef}
 							onClick={handleClickPrev}
 						>
-							<GrPrevious className="!w-8 !h-8 text-gray-300 drop-shadow-2xl !p-0" />
+							<GrPrevious className="!w-6 !h-6 text-gray-300 drop-shadow-2xl !p-0" />
 						</Button>
 
 						<Button
-							className="next p-0 rounded-full hover:bg-primary w-12 h-12 absolute right-2 top-1/2 z-20"
+							className="next p-0 rounded-full hover:bg-primary w-10 h-10 absolute right-2 top-1/2 z-20"
 							variant={"ghost"}
 							ref={nextRef}
 							onClick={handleClickNext}
 						>
-							<GrNext className="!w-8 !h-8 text-gray-300 drop-shadow-2xl !p-0" />
+							<GrNext className="!w-6 !h-6 text-gray-300 drop-shadow-2xl !p-0" />
 						</Button>
 					</div>
 
-					<div className="photo-info w-full lg:w-1/3 lg:max-w-[540px] flex flex-col gap-5 p-3 lg:p-5">
+					<div className="photo-info w-full lg:w-1/3 lg:max-w-[540px] flex flex-col gap-2 md:gap-3 lg:gap-5 p-3 lg:p-5">
 						<h2 className="photo-title font-semibold font-Oswald text-xl lg:mt-4 lg:text-2xl xl:text-3xl capitalize">
 							{photo?.alt || photo?.tags || "Photo Title"}
 						</h2>
 
 						<div className="photo-container flex-1 flex flex-col gap-3">
 							<div className="photographer flex items-center gap-2 lg:gap-3">
-								<div className="avatar w-12 h-12 flex items-center justify-center aspect-square rounded-full">
+								<div className="avatar w-8 lg:w-12 flex items-center justify-center aspect-square rounded-full">
 									{photo?.userImageURL ? (
 										<Image
 											src={photo?.userImageURL}
 											alt={photo?.user || "User Photo"}
 											width="96"
 											height="96"
-											className="object-cover rounded-full"
+											className="object-cover  aspect-square rounded-full"
 										/>
 									) : (
 										<FaCameraRetro className="w-8 h-8" />
@@ -145,13 +145,31 @@ export default function PhotoDetails({ photoId }: { photoId: string }) {
 							</div>
 
 							{photo?.tags && <PhotoTags tags={photo?.tags} />}
+
+							{photo?.views && (
+								<div className="photo-static flex gap-4 lg:flex-col lg:mt-5 text-gray-700">
+									{photo?.likes && (
+										<div className="photo-likes ">Likes: {photo.likes}</div>
+									)}
+
+									{photo?.views && (
+										<div className="photo-view ">Views: {photo.views}</div>
+									)}
+
+									{photo?.downloads && (
+										<div className="photo-downloads ">
+											Download: {photo.downloads}
+										</div>
+									)}
+								</div>
+							)}
 						</div>
 
-						<div className="photo-download flex justify-between">
+						<div className="photo-download flex justify-between items-center">
 							<PhotoBrand photo={photo} />
 							<Button asChild>
 								<Link
-									className="download bg-green-700 flex gap-3 !rounded-full text-xl !h-12 px-7"
+									className="download bg-green-700 flex gap-3 !rounded-full text-xl !h-11 px-5"
 									target="_blank"
 									title="Download Image"
 									download
@@ -161,7 +179,7 @@ export default function PhotoDetails({ photoId }: { photoId: string }) {
 										"/"
 									}
 								>
-									<LuDownloadCloud className="!w-7 !h-7" />
+									<LuDownloadCloud className="!w-5 !h-5" />
 									<span>Download</span>
 								</Link>
 							</Button>

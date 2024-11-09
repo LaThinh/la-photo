@@ -6,6 +6,7 @@ export const keywords = [
 	"Flower",
 	"Sunset",
 	"Paris",
+	"Hallstatt",
 	"Hạ Long",
 	"Đà Nẵng",
 	"Nha Trang",

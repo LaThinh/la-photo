@@ -9,6 +9,9 @@ import Loading from "./Loading";
 import { CiGrid2V, CiGrid42 } from "react-icons/ci";
 import PhotoList from "./photo/PhotoList";
 import FormSearch from "./FormSearch";
+import { useSearchParams } from "next/navigation";
+import { actionSearchPhoto } from "../action/searchPhoto";
+import { Button } from "@/components/ui/button";
 
 const AnimationScript = dynamic(() => import("@components/AnimationScript"), { ssr: false });
 const PhotoBanner = dynamic(() => import("@components/photo/PhotoBanner"), {
@@ -19,21 +22,58 @@ export const revalidate = 3600;
 
 export default function SearchComponent({ q, result }: { q?: string; result?: ISearchResult }) {
 	// const [search, setSearch] = useState(q || "");
+	const searchParams = useSearchParams();
+	const [page, setPage] = useState(1);
+
 	const [photos, setPhotos] = useState<IPhoto[]>(result?.photos || []);
 	const [loading, setLoading] = useState(true);
 	const [gridView, setGridView] = useState("list");
 	const formRef = useRef(null);
 
+	const [loadMore, setLoadMore] = useState(false);
+
 	const handleChangeGridView = (view: string) => {
 		setGridView(view);
 	};
+
+	const getResultPage = async (page: number) => {
+		setLoadMore(true);
+		const result = await actionSearchPhoto(q || "", page);
+		const newPhotos = result.photos;
+
+		setPhotos([...photos, ...newPhotos]);
+		setLoadMore(false);
+	};
+
+	const handleLoadMore = () => {
+		setPage(page + 1);
+	};
+
+	useEffect(() => {
+		if (page > 1) {
+			console.log("use Effect Page " + page);
+			getResultPage(page);
+		}
+	}, [page]);
 
 	useEffect(() => {
 		if (photos.length < 0 && result && result?.photos.length > 0) {
 			setPhotos(result.photos);
 			setLoading(false);
 		}
+		const pageParam = searchParams.get("page");
+		if (pageParam) setPage(Number(pageParam));
 	}, [result]);
+
+	useEffect(() => {
+		const pageParam = searchParams.get("page");
+		if (pageParam) {
+			const currentPage = Number(pageParam);
+			if (q && currentPage > 1) {
+				getResultPage(currentPage);
+			}
+		}
+	}, [searchParams]);
 
 	useEffect(() => {
 		if (photos && photos.length > 0) {
@@ -85,8 +125,8 @@ export default function SearchComponent({ q, result }: { q?: string; result?: IS
 			{loading && <Loading loadingText={`Searching Photo ${q}`} />}
 			{!loading && photos.length > 0 && (
 				<div className="search-results w-full mx-auto flex flex-col justify-center max-w-[2400px] mb-20">
-					<div className="result-toolbar px-3 lg:px-5 min-h-14 lg:min-h-20 flex items-center justify-between">
-						<h3 className="result static text-xl lg:text-2xl text-gray-600 w-full">
+					<div className="result-toolbar sticky top-14 lg:top-16 z-20 bg-white/70 backdrop-blur-lg px-3 lg:px-5 min-h-12 lg:min-h-16 flex items-center justify-between">
+						<h3 className="result static text:base md:text-xl lg:text-2xl text-gray-600 w-full">
 							{q && q.length > 0 ? (
 								<span className="">
 									Results for {`"${q}" :`} {photos.length}
@@ -117,11 +157,31 @@ export default function SearchComponent({ q, result }: { q?: string; result?: IS
 						{photos &&
 							photos.length > 0 &&
 							(gridView == "grid" ? (
-								<PhotoGrid photos={photos} />
+								<>
+									<PhotoGrid photos={photos} />
+
+									<div className="load-more flex m-auto justify-center mt-10 items-center">
+										<Button
+											className="load-more rounded-full px-10 py-3 text-lg lg:text-xl lg:py-5"
+											onClick={handleLoadMore}
+											disabled={loadMore}
+										>
+											{!loadMore
+												? `Loadmore page ${page + 1}`
+												: `Loading page ${page} ...`}
+										</Button>
+									</div>
+								</>
 							) : (
 								<PhotoList photos={photos} />
 							))}
 					</div>
+				</div>
+			)}
+
+			{!loading && photos.length == 0 && (
+				<div className="no-results container min-h-72 flex justify-center items-center">
+					<h4 className="text-xl">No Results for {`"${q}"`}</h4>
 				</div>
 			)}
 

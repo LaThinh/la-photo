@@ -12,21 +12,26 @@ export const pixabayAPI = `https://pixabay.com/api/?key=${pixabayAPIKey}`;
 export const revalidate = 3600; // invalidate every hour
 
 export const getSearchPexels = async (query: string, page?: number) => {
+	// const q = encodeURIComponent(query);
 	const p = page || 1;
 	const url = `https://api.pexels.com/v1/search?query=${query}&per_page=80&page=${p}`;
 
+	console.log(url);
+
 	const res = await fetch(url, {
 		headers: {
-			Authorization: process.env.PEXELS_API_KEY || "",
+			Authorization: "t9rK44ewElcEocAAOOZIAzT4tZLuloBLWNWwfJoKOMAoGPw10XpGyAat",
 		},
 		next: {
 			revalidate: 3600,
 		},
 	});
+
 	return res.json();
 };
 
 export const getSearchPixabay = async (query: string, page?: number) => {
+	// const q = encodeURIComponent(query);
 	const p = page || 1;
 	const url = `${pixabayAPI}&q=${query}&image_type=photo&per_page=100&page=${p}&min_width=200&min_height=200`;
 	const res = await fetch(url, {

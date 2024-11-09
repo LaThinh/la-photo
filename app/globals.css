@@ -228,28 +228,34 @@ h6 {
 }
 
 .animation {
-	opacity: 0.3;
-	transform: translateY(1rem);
-	transition: all 500ms ease-in-out;
+	opacity: 0.2;
+	/* transform: translateY(1rem); */
+	transform: translate3d(0, 120px, 0px);
+	transition: all 900ms ease-in-out;
 }
 .animation.fadeInUp {
-	animation: fadeInUp 500ms ease-in-out;
+	animation: fadeInUp 900ms ease-in-out;
 	opacity: 1;
 	transform: translateY(0);
 }
 
 @keyframes fadeInUp {
 	0% {
-		opacity: 0.5;
-		transform: translateY(1rem);
+		opacity: 0.2;
+		/* transform: translateY(1rem); */
+		transform: translate3d(0, 120px, 0px);
 	}
 
 	100% {
 		opacity: 1;
-		transform: translateY(0);
+		/* transform: translateY(0); */
+		transform: translate3d(0, 0, 0);
 	}
 }
 
+.modal-photo > button {
+	@apply bg-white/30 p-2 rounded-full top-2 right-2;
+}
 .modal-photo > button > svg {
-	@apply w-7 h-7;
+	@apply w-6 h-6;
 }
