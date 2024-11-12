@@ -89,7 +89,7 @@ export default function PhotoDetails({ photoId }: { photoId: string }) {
 		<div className="photo-detail ">
 			{photo && (
 				<div className="photo-box flex gap-0 flex-col lg:flex-row">
-					<div className="photo-image relative flex-1 flex justify-center lg:min-h-[50vh] bg-slate-900">
+					<div className="photo-image relative flex-1 flex justify-center lg:min-h-[70vh] bg-slate-900">
 						<Image
 							width={photo?.width || photo?.imageWidth || "700"}
 							height={photo?.height || photo?.imageHeight || "700"}

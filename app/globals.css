@@ -228,28 +228,28 @@ h6 {
 }
 
 .animation {
-	opacity: 0.2;
+	/* opacity: 0.2; */
 	/* transform: translateY(1rem); */
-	transform: translate3d(0, 120px, 0px);
-	transition: all 900ms ease-in-out;
+	/* transform: translate3d(0, 120px, 0px); */
+	/* transition: all 500ms ease-in-out; */
 }
 .animation.fadeInUp {
-	animation: fadeInUp 900ms ease-in-out;
+	animation: fadeInUp 500ms ease-in-out;
 	opacity: 1;
-	transform: translateY(0);
+	/* transform: translateY(0); */
 }
 
 @keyframes fadeInUp {
 	0% {
-		opacity: 0.2;
+		opacity: 0.5;
 		/* transform: translateY(1rem); */
-		transform: translate3d(0, 120px, 0px);
+		/* transform: translate3d(0, 120px, 0px); */
 	}
 
 	100% {
 		opacity: 1;
 		/* transform: translateY(0); */
-		transform: translate3d(0, 0, 0);
+		/* transform: translate3d(0, 0, 0); */
 	}
 }
 
@@ -258,4 +258,8 @@ h6 {
 }
 .modal-photo > button > svg {
 	@apply w-6 h-6;
+}
+
+.flex-center {
+	@apply flex items-center justify-center;
 }

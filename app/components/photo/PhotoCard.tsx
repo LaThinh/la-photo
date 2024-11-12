@@ -6,6 +6,12 @@ import { LuDownload } from "react-icons/lu";
 import { getPhotoOrientation } from "@libs/utils";
 import Photographer from "./Photographer";
 
+import dynamic from "next/dynamic";
+
+const PhotoFavorite = dynamic(() => import("@components/photo/PhotoFavorite"), {
+	ssr: false,
+});
+
 export default function PhotoCard({ photo }: { photo: IPhoto }) {
 	const source: ImageSource = photo?.url ? ImageSource.Pexels : ImageSource.Pixabay;
 
@@ -55,7 +61,9 @@ export default function PhotoCard({ photo }: { photo: IPhoto }) {
 					</Link>
 				</div>
 
-				<div className="image-download transition-all absolute right-2 -top-16 group-hover:top-2">
+				<PhotoFavorite photo={photo} />
+
+				<div className="image-download transition-all absolute right-2 z-50 -bottom-16 group-hover:bottom-2">
 					<Link
 						className="download"
 						target="_blank"
@@ -76,14 +84,14 @@ export default function PhotoCard({ photo }: { photo: IPhoto }) {
 					</div>
 				)} */}
 				<div
-					className="tags absolute -right-72 transition-all duration-500 group-hover:right-0 group-hover:bottom-8 lg:group-hover:bottom-12 
+					className="tags absolute -right-72 transition-all duration-500 group-hover:right-0 group-hover:bottom-10 lg:group-hover:bottom-12 
 					text-white text-[11px] lg:text-sm bg-slate-700/50 px-2 py-1"
 				>
-					{photo?.alt || photo?.tags}
+					<span className="line-clamp-1">{photo?.alt || photo?.tags}</span>
 				</div>
 			</div>
 			<div className="card-footer transition-all absolute left-0 right-0 -bottom-20 group-hover:bottom-0">
-				<div className="h-8 lg:h-12 flex items-center justify-between bg-slate-700/50 text-white backdrop-blur-sm px-2">
+				<div className="h-10 lg:h-12 flex items-center justify-between bg-slate-700/50 text-white backdrop-blur-sm px-2">
 					<div className="photographer flex gap-2 items-center">
 						{photo?.userImageURL && (
 							<Image
@@ -103,7 +111,7 @@ export default function PhotoCard({ photo }: { photo: IPhoto }) {
 						)}
 						<Photographer photo={photo} className="text-xs lg:text-sm xl:text-base" />
 					</div>
-					<div className="right-info">
+					<div className="right-info mr-10 ">
 						{photo?.views && (
 							<span className="text-xs lg:text-sm">Views: {photo.views}</span>
 						)}
