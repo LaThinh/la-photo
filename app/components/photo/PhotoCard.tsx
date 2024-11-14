@@ -32,7 +32,7 @@ export default function PhotoCard({ photo, isFavorite }: { photo: IPhoto; isFavo
 	const photoOrient = getPhotoOrientation(photo);
 
 	return (
-		<div className={`photo-card ${photoOrient} group animation`}>
+		<div className={`photo-card ${photoOrient} group`} data-animate="animate-fade-up">
 			<div className="card-body relative min-h-36 bg-gray-300">
 				<Link
 					href={`/photo/${photo.id}${isFavorite ? "?isFavorite" : ""}`}

@@ -11,6 +11,7 @@ export default function PhotoFavorite({ photo }: { photo: IPhoto }) {
 
 	useEffect(() => {
 		if (!favoriteImages) return;
+
 		const index = favoriteImages.findIndex((image: IPhoto) => image.id === photo.id);
 		if (index >= 0) setIsFavorite(true);
 	}, [favoriteImages]);

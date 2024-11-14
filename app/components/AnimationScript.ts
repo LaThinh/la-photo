@@ -8,7 +8,16 @@ const observer = new IntersectionObserver(
 			// if (entry.isIntersecting) observer.unobserve(entry.target);
 			// entry.target.classList.add("animation");
 			if (entry.isIntersecting) {
-				entry.target.classList.add("fadeInUp");
+				const classAttr = entry.target.getAttribute("data-animate") || "";
+				// const classList = classAttr.split(" ");
+				entry.target.classList.add(
+					// "animate-fade-up",
+					// "animate-delay-300",
+					// "animate-duration-1000"
+
+					classAttr
+				);
+
 				return;
 			}
 		});
@@ -24,9 +33,11 @@ const observer = new IntersectionObserver(
 export default function AnimationScript() {
 	if (typeof window !== "undefined") {
 		setTimeout(() => {
-			const cards = document.querySelectorAll(".animation");
+			// const cards = document.querySelectorAll(".animation");
+			const cards = document.querySelectorAll("[data-animate]");
 			cards.forEach((card) => {
 				observer.observe(card);
+				card.classList.add("opacity-0");
 			});
 		}, 1000);
 	}

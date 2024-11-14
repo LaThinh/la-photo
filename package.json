@@ -23,6 +23,7 @@
 		"shadcn": "^1.0.0",
 		"tailwind-merge": "^2.5.4",
 		"tailwindcss-animate": "^1.0.7",
+		"tailwindcss-animated": "^1.1.2",
 		"zustand": "^5.0.1"
 	},
 	"devDependencies": {

@@ -2,7 +2,7 @@ import { getSearchPhotos } from "../services/photoSearch";
 import SearchComponent from "@components/SearchComponent";
 
 export default async function Home() {
-	const query = "Paris";
+	const query = "Landscape Paris";
 	// const client = createClient(process.env.PEXELS_API_KEY || "");
 	// const response: any = await client.photos.search({ query, per_page: 100 });
 	// const photos: IPhoto[] = response?.photos || [];

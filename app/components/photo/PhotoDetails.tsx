@@ -13,6 +13,13 @@ import { GrNext, GrPrevious } from "react-icons/gr";
 import PhotoBrand from "./PhotoBrand";
 import { useFavoriteStore } from "@/app/stores/favoriteStore";
 import { useSearchParams } from "next/navigation";
+import PhotoFavorite from "@components/photo/PhotoFavorite";
+
+// import dynamic from "next/dynamic";
+
+// const PhotoFavorite = dynamic(() => import("@components/photo/PhotoFavorite"), {
+// 	ssr: false,
+// });
 
 export default function PhotoDetails({ photoId }: { photoId: string }) {
 	const searchParams = useSearchParams();
@@ -23,12 +30,12 @@ export default function PhotoDetails({ photoId }: { photoId: string }) {
 	const [jsonData, setJsonData] = useState<IPhoto[]>([]);
 	const [index, setIndex] = useState(0);
 
+	const [loading, setLoading] = useState(false);
+
 	const nextRef = useRef<HTMLButtonElement>(null);
 	const prevRef = useRef<HTMLButtonElement>(null);
 
 	useEffect(() => {
-		console.log(paramFavorite);
-
 		if (paramFavorite != null) {
 			console.log("Setting favorite");
 			setJsonData(favoriteImages);
@@ -70,6 +77,8 @@ export default function PhotoDetails({ photoId }: { photoId: string }) {
 	}, []);
 
 	useEffect(() => {
+		if (!jsonData || jsonData.length === 0) return;
+
 		const photoIndex = jsonData.findIndex((p) => p.id.toString() === photoId);
 
 		if (photoIndex >= 0) {
@@ -78,10 +87,15 @@ export default function PhotoDetails({ photoId }: { photoId: string }) {
 	}, [jsonData, photoId]);
 
 	useEffect(() => {
+		setLoading(false);
+	}, [index]);
+
+	useEffect(() => {
 		setPhoto(jsonData[index]);
 	}, [index, jsonData]);
 
 	const handleClickNext = () => {
+		setLoading(true);
 		// console.log("handle Next" + index);
 		let newIndex = index + 1;
 		if (newIndex >= jsonData.length) {
@@ -92,6 +106,8 @@ export default function PhotoDetails({ photoId }: { photoId: string }) {
 
 	const handleClickPrev = () => {
 		// console.log("handle Prev" + index);
+		setLoading(true);
+
 		let newIndex = index - 1;
 		if (newIndex < 0) {
 			newIndex = jsonData.length - 1;
@@ -103,7 +119,7 @@ export default function PhotoDetails({ photoId }: { photoId: string }) {
 		<div className="photo-detail ">
 			{photo && (
 				<div className="photo-box flex gap-0 flex-col lg:flex-row">
-					<div className="photo-image relative flex-1 flex justify-center lg:min-h-[90vh] xl:min-w-[80vh] 3xl:min-h-[70vh] bg-slate-900">
+					<div className="photo-image relative flex-1 flex justify-center lg:min-h-[50vh] 3xl:min-h-[70vh] bg-slate-900">
 						<Image
 							width={photo?.width || photo?.imageWidth || "700"}
 							height={photo?.height || photo?.imageHeight || "700"}
@@ -129,6 +145,8 @@ export default function PhotoDetails({ photoId }: { photoId: string }) {
 						>
 							<GrNext className="!w-6 !h-6 text-gray-300 drop-shadow-2xl !p-0" />
 						</Button>
+
+						{!loading && <PhotoFavorite photo={jsonData[index]} />}
 					</div>
 
 					<div className="photo-info w-full lg:w-1/3 lg:max-w-[540px] flex flex-col gap-2 md:gap-3 lg:gap-5 p-3 lg:p-5">

@@ -8,13 +8,16 @@ interface FavoriteState {
 	removeFavorite: (by: IPhoto) => void;
 }
 
+const getLocalStorage = () => {
+	if (typeof window !== "undefined")
+		return JSON.parse(localStorage.getItem("favoritePhotos") || "[]");
+	return [];
+};
+
 export const useFavoriteStore = create<FavoriteState>()(
 	persist(
 		(set) => {
-			const initialFavoriteImages =
-				typeof window !== "undefined"
-					? JSON.parse(localStorage.getItem("favoritePhotos") || "[]")
-					: [];
+			const initialFavoriteImages = getLocalStorage();
 
 			return {
 				favoriteImages: initialFavoriteImages,
