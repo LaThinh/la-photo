@@ -1,6 +1,6 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
 # Getting Started La Photo
+![image](https://github.com/user-attachments/assets/62ff1c6d-adbc-4fc9-a3d1-26c060a7220f)
+
 ### Search Photos. Web App use Nextjs 15, TailwindCSS, Pixabay API, Pexels API
 
 ![image](https://github.com/user-attachments/assets/92af692f-63b2-480b-beab-2822018b19c5)
@@ -25,6 +25,18 @@ Link Result: https://pagespeed.web.dev/analysis/https-photo-laquocthinh-com/oost
 ![image](https://github.com/user-attachments/assets/dcca7e25-99d5-4b70-9a83-f04427bb3e1b)
 
 First, run the development server:
+
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+```
+.env example:
+PEXELS_API_KEY=xxx
+PIXABAY_API_KEY=xxx
+```
+
+Get API Key in here: 
+https://www.pexels.com/api/ 
+https://pixabay.com/service/about/api/
 
 ```bash
 npm run dev
