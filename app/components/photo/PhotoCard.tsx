@@ -12,7 +12,7 @@ const PhotoFavorite = dynamic(() => import("@components/photo/PhotoFavorite"), {
 	ssr: false,
 });
 
-export default function PhotoCard({ photo }: { photo: IPhoto }) {
+export default function PhotoCard({ photo, isFavorite }: { photo: IPhoto; isFavorite?: boolean }) {
 	const source: ImageSource = photo?.url ? ImageSource.Pexels : ImageSource.Pixabay;
 
 	let brandLogo = "";
@@ -34,7 +34,10 @@ export default function PhotoCard({ photo }: { photo: IPhoto }) {
 	return (
 		<div className={`photo-card ${photoOrient} group animation`}>
 			<div className="card-body relative min-h-36 bg-gray-300">
-				<Link href={`/photo/${photo.id}`} prefetch={false}>
+				<Link
+					href={`/photo/${photo.id}${isFavorite ? "?isFavorite" : ""}`}
+					prefetch={false}
+				>
 					<Image
 						width={photo?.width || photo?.imageWidth || "200"}
 						height={photo?.height || photo?.imageHeight || "200"}

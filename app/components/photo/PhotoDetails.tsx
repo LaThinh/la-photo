@@ -11,8 +11,14 @@ import { FaCameraRetro } from "react-icons/fa";
 import Photographer from "./Photographer";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import PhotoBrand from "./PhotoBrand";
+import { useFavoriteStore } from "@/app/stores/favoriteStore";
+import { useSearchParams } from "next/navigation";
 
 export default function PhotoDetails({ photoId }: { photoId: string }) {
+	const searchParams = useSearchParams();
+	const paramFavorite = searchParams.get("isFavorite");
+
+	const { favoriteImages } = useFavoriteStore();
 	const [photo, setPhoto] = useState<IPhoto>();
 	const [jsonData, setJsonData] = useState<IPhoto[]>([]);
 	const [index, setIndex] = useState(0);
@@ -21,39 +27,17 @@ export default function PhotoDetails({ photoId }: { photoId: string }) {
 	const prevRef = useRef<HTMLButtonElement>(null);
 
 	useEffect(() => {
-		const photoIndex = jsonData.findIndex((p) => p.id.toString() === photoId);
+		console.log(paramFavorite);
 
-		if (photoIndex >= 0) {
-			setIndex(photoIndex);
-		}
-	}, [jsonData, photoId]);
-
-	useEffect(() => {
-		setPhoto(jsonData[index]);
-	}, [index, jsonData]);
-
-	const handleClickNext = () => {
-		// console.log("handle Next" + index);
-		let newIndex = index + 1;
-		if (newIndex >= jsonData.length) {
-			newIndex = 0;
-		}
-		setIndex(newIndex);
-	};
-
-	const handleClickPrev = () => {
-		// console.log("handle Prev" + index);
-		let newIndex = index - 1;
-		if (newIndex < 0) {
-			newIndex = jsonData.length - 1;
-		}
-		setIndex(newIndex);
-	};
-
-	useEffect(() => {
-		const storedData = localStorage.getItem("jsonPhotos");
-		if (storedData) {
-			setJsonData(JSON.parse(storedData));
+		if (paramFavorite != null) {
+			console.log("Setting favorite");
+			setJsonData(favoriteImages);
+		} else {
+			const storedData = localStorage.getItem("jsonPhotos");
+			if (storedData) {
+				console.log("Setting Local");
+				setJsonData(JSON.parse(storedData));
+			}
 		}
 
 		const handleKeyDown = (event: any) => {
@@ -85,11 +69,41 @@ export default function PhotoDetails({ photoId }: { photoId: string }) {
 		};
 	}, []);
 
+	useEffect(() => {
+		const photoIndex = jsonData.findIndex((p) => p.id.toString() === photoId);
+
+		if (photoIndex >= 0) {
+			setIndex(photoIndex);
+		}
+	}, [jsonData, photoId]);
+
+	useEffect(() => {
+		setPhoto(jsonData[index]);
+	}, [index, jsonData]);
+
+	const handleClickNext = () => {
+		// console.log("handle Next" + index);
+		let newIndex = index + 1;
+		if (newIndex >= jsonData.length) {
+			newIndex = 0;
+		}
+		setIndex(newIndex);
+	};
+
+	const handleClickPrev = () => {
+		// console.log("handle Prev" + index);
+		let newIndex = index - 1;
+		if (newIndex < 0) {
+			newIndex = jsonData.length - 1;
+		}
+		setIndex(newIndex);
+	};
+
 	return (
 		<div className="photo-detail ">
 			{photo && (
 				<div className="photo-box flex gap-0 flex-col lg:flex-row">
-					<div className="photo-image relative flex-1 flex justify-center lg:min-h-[70vh] bg-slate-900">
+					<div className="photo-image relative flex-1 flex justify-center lg:min-h-[90vh] xl:min-w-[80vh] 3xl:min-h-[70vh] bg-slate-900">
 						<Image
 							width={photo?.width || photo?.imageWidth || "700"}
 							height={photo?.height || photo?.imageHeight || "700"}

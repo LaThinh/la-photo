@@ -6,9 +6,9 @@ export default function RootLayout({
 	modal: React.ReactNode;
 }>) {
 	return (
-		<>
+		<div className="layout-photo" suppressHydrationWarning>
 			{children}
 			{modal}
-		</>
+		</div>
 	);
 }

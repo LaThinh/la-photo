@@ -1,7 +1,5 @@
-// import { createClient } from "pexels";
-import SearchComponent from "../components/Search";
-// import { IPhoto } from "../lib/interface";
 import { getSearchPhotos } from "../services/photoSearch";
+import SearchComponent from "@components/SearchComponent";
 
 export default async function Home() {
 	const query = "Paris";
@@ -13,6 +11,7 @@ export default async function Home() {
 
 	return (
 		<div className="homepage flex flex-col gap-8 row-start-2 items-center sm:items-start">
+			{/* <SearchComponent result={result} /> */}
 			<SearchComponent result={result} />
 		</div>
 	);

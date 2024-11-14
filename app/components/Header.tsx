@@ -1,7 +1,14 @@
+"use client";
+
 import Link from "next/link";
 import React from "react";
 import HeaderSearch from "./header/HeaderSearch";
-import HeaderFavious from "./header/HeaderFavious";
+// import HeaderFavious from "./header/HeaderFavious";
+
+import dynamic from "next/dynamic";
+const HeaderFavious = dynamic(() => import("@components/header/HeaderFavious"), {
+	ssr: false,
+});
 
 export default function Header() {
 	return (
