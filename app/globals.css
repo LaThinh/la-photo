@@ -152,19 +152,24 @@ h6 {
 }
 
 .photo-card.landscape {
-	@apply col-span-3 row-span-2 bg-green-200 aspect-[3/2];
+	@apply col-span-3 row-span-2 bg-green-200;
+	/* aspect-[3/2]; */
 }
 
-.photo-card.landscape img {
+.photo-grid.grid .photo-card.landscape {
+	@apply aspect-[3/2];
+}
+.photo-grid.grid .photo-card.landscape .main-photo {
+	/* @apply max-w-[120%] m-auto; */
 	@apply aspect-[3/2];
 }
 
 .photo-card.portrait {
-	@apply col-span-3 row-span-4 bg-slate-500 aspect-[3/4];
+	@apply col-span-3 row-span-4 bg-slate-500 aspect-[3/4.05] 2xl:aspect-[3/4.1];
 }
 
 .photo-card.portrait img {
-	@apply aspect-[3/4];
+	@apply aspect-[3/4.1];
 }
 
 .photo-card.square {

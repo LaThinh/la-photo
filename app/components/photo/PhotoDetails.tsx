@@ -14,6 +14,7 @@ import PhotoBrand from "./PhotoBrand";
 import { useFavoriteStore } from "@/app/stores/favoriteStore";
 import { useSearchParams } from "next/navigation";
 import PhotoFavorite from "@components/photo/PhotoFavorite";
+import { IoPause, IoPlay } from "react-icons/io5";
 
 // import dynamic from "next/dynamic";
 
@@ -29,11 +30,12 @@ export default function PhotoDetails({ photoId }: { photoId: string }) {
 	const [photo, setPhoto] = useState<IPhoto>();
 	const [jsonData, setJsonData] = useState<IPhoto[]>([]);
 	const [index, setIndex] = useState(0);
-
 	const [loading, setLoading] = useState(false);
 
 	const nextRef = useRef<HTMLButtonElement>(null);
 	const prevRef = useRef<HTMLButtonElement>(null);
+
+	const [isAutoplaying, setIsAutoplaying] = useState(false);
 
 	useEffect(() => {
 		if (paramFavorite != null) {
@@ -52,6 +54,10 @@ export default function PhotoDetails({ photoId }: { photoId: string }) {
 				if (nextRef && nextRef.current) nextRef.current.click();
 			} else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
 				if (prevRef && prevRef.current) prevRef.current.click();
+			}
+
+			if (event.key === "p") {
+				setIsAutoplaying(!isAutoplaying);
 			}
 		};
 
@@ -115,6 +121,18 @@ export default function PhotoDetails({ photoId }: { photoId: string }) {
 		setIndex(newIndex);
 	};
 
+	useEffect(() => {
+		if (isAutoplaying) nextRef?.current?.click();
+
+		const intervalId = setInterval(() => {
+			if (isAutoplaying && nextRef) {
+				nextRef?.current?.click();
+			}
+		}, 5000);
+
+		return () => clearInterval(intervalId);
+	}, [isAutoplaying]);
+
 	return (
 		<div className="photo-detail ">
 			{photo && (
@@ -124,7 +142,13 @@ export default function PhotoDetails({ photoId }: { photoId: string }) {
 							width={photo?.width || photo?.imageWidth || "700"}
 							height={photo?.height || photo?.imageHeight || "700"}
 							alt={photo?.alt || photo?.tags || "Photo Image"}
-							src={photo?.src?.large2x || photo?.largeImageURL || "/default.png"}
+							src={
+								photo?.src?.large2x ||
+								(paramFavorite == null
+									? photo?.largeImageURL
+									: photo?.previewURL?.replace("_150", "_1280")) ||
+								"/default.png"
+							}
 							className="bg-slate-300 min-h-36 object-cover h-full w-auto max-h-[70vh] lg:max-h-[98vh]"
 						/>
 
@@ -146,7 +170,26 @@ export default function PhotoDetails({ photoId }: { photoId: string }) {
 							<GrNext className="!w-6 !h-6 text-gray-300 drop-shadow-2xl !p-0" />
 						</Button>
 
-						{!loading && <PhotoFavorite photo={jsonData[index]} />}
+						{!loading && (
+							<div className="favorite-icon absolute w-14 h-14 left-0 top-0 z-20">
+								<PhotoFavorite photo={jsonData[index]} />
+							</div>
+						)}
+						<div className="absolute z-50 bottom-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
+							<Button
+								className="autoplay p-0 rounded-full hover:bg-primary min-w-12 px-4 h-10 
+								bg-gray-700/30 text-white/70 hover:text-white"
+								variant={"ghost"}
+								onClick={() => setIsAutoplaying(!isAutoplaying)}
+							>
+								{isAutoplaying ? (
+									<IoPause className="!w-6 !h-6 text-white drop-shadow-2xl !p-0" />
+								) : (
+									<IoPlay className="!w-6 !h-6 text-white drop-shadow-2xl !p-0" />
+								)}
+								<span className="">Autoplay</span>
+							</Button>
+						</div>
 					</div>
 
 					<div className="photo-info w-full lg:w-1/3 lg:max-w-[540px] flex flex-col gap-2 md:gap-3 lg:gap-5 p-3 lg:p-5">

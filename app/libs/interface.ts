@@ -47,6 +47,7 @@ export interface IPhoto {
 	src?: IPexelImage;
 	largeImageURL?: string;
 	webformatURL?: string;
+	previewURL?: string;
 	alt?: string;
 	tags?: string;
 	url?: string;

@@ -142,12 +142,14 @@ export default function SearchComponent({ q, result }: { q?: string; result?: IS
 								className={`grid-view h-8 w-8 ${
 									gridView === "list" ? "text-primary" : "cursor-pointer"
 								}`}
+								title="Small View"
 								onClick={() => handleChangeGridView("list")}
 							/>
 							<CiGrid42
 								className={`grid-view h-8 w-8 ${
 									gridView === "grid" ? "text-primary" : "cursor-pointer"
 								}`}
+								title="Large View"
 								onClick={() => handleChangeGridView("grid")}
 							/>
 						</div>

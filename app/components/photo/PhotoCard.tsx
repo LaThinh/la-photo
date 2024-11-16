@@ -31,6 +31,10 @@ export default function PhotoCard({ photo, isFavorite }: { photo: IPhoto; isFavo
 
 	const photoOrient = getPhotoOrientation(photo);
 
+	const pixabaySrc = isFavorite
+		? photo?.previewURL?.replace("_150", "_1280")
+		: photo?.webformatURL;
+
 	return (
 		<div className={`photo-card ${photoOrient} group`} data-animate="animate-fade-up">
 			<div className="card-body relative min-h-36 bg-gray-300">
@@ -42,8 +46,8 @@ export default function PhotoCard({ photo, isFavorite }: { photo: IPhoto; isFavo
 						width={photo?.width || photo?.imageWidth || "200"}
 						height={photo?.height || photo?.imageHeight || "200"}
 						alt={photo?.alt || photo?.tags || "Photo Image"}
-						src={photo?.src?.large || photo?.webformatURL || "/default.png"}
-						className="min-h-36 object-cover"
+						src={photo?.src?.large || pixabaySrc || "/default.png"}
+						className="main-photo min-h-36 object-cover"
 					/>
 				</Link>
 				<div className="image-source absolute transition-all top-2 -left-16 group-hover:left-2 aspect-square">
@@ -87,7 +91,7 @@ export default function PhotoCard({ photo, isFavorite }: { photo: IPhoto; isFavo
 					</div>
 				)} */}
 				<div
-					className="tags absolute -right-72 transition-all duration-500 group-hover:right-0 group-hover:bottom-10 lg:group-hover:bottom-12 
+					className="tags absolute -right-72 transition-all group-hover:right-0 group-hover:bottom-10 lg:group-hover:bottom-12 
 					text-white text-[11px] lg:text-sm bg-slate-700/50 px-2 py-1"
 				>
 					<span className="line-clamp-1">{photo?.alt || photo?.tags}</span>

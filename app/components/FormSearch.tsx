@@ -18,6 +18,9 @@ export default function FormSearch({ query }: { query?: string }) {
 		}
 		const headerSearch = document.querySelector("#header-search");
 		headerSearch?.classList.add("hidden");
+
+		const inputSearch: HTMLInputElement | null = document.querySelector("#search");
+		if (inputSearch) inputSearch.value = search;
 	}, []);
 
 	useEffect(() => {

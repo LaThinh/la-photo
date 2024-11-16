@@ -15,7 +15,7 @@ export default function HeaderFavious() {
 				title="View Favious Photo"
 				className="flex items-center hover:text-primary"
 			>
-				<span>Favious</span>
+				<span className="hidden lg:block">Favious</span>
 				<IoHeart className="w-9 h-9 text-red-600" />
 				<span className="count flex-center text-xs text-white w-9 h-9 -ml-9 ">
 					{favoriteImages.length}

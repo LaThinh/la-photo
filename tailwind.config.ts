@@ -64,6 +64,10 @@ const config: Config = {
 				md: "calc(var(--radius) - 2px)",
 				sm: "calc(var(--radius) - 4px)",
 			},
+			gridTemplateColumns: {
+				"15": "repeat(15, minmax(0, 1fr))",
+				"18": "repeat(18, minmax(0, 1fr))",
+			},
 		},
 	},
 	plugins: [require("tailwindcss-animated"), require("tailwindcss-animate")],

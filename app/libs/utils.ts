@@ -30,3 +30,9 @@ export function getRandomIndex(length: number): number {
 	const maxLength = Math.min(length, 50);
 	return Math.floor(Math.random() * maxLength);
 }
+
+export function extractDate(stringUrl: string) {
+	const parts = stringUrl.split("/"); // Split the URL by "/"
+	if (parts.length < 7) return null;
+	return parts[6] + "/" + parts[5] + "/" + parts[4];
+}

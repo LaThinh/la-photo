@@ -7,7 +7,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<div className="layout-photo" suppressHydrationWarning>
-			{children}
+			<div className="main-wrapper mx-auto w-full max-w-[2400px]">{children}</div>
 			{modal}
 		</div>
 	);
