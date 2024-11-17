@@ -22,7 +22,7 @@ export default function HeaderSearch() {
 				<form
 					action={`/search/${encodeURIComponent(search || "")}`}
 					className="search-form relative z-20 flex flex-col w-full gap-2 
-                justify-center h-10 lg:h-12"
+                justify-center h-9 lg:h-12"
 				>
 					<div className="field-row flex gap-0 items-center">
 						<div className="form-control flex-1 h-full">
@@ -33,12 +33,12 @@ export default function HeaderSearch() {
 								onChange={(e) => setSearch(e.target.value)}
 								placeholder="What image are you looking for?"
 								className="border bg-white w-full border-1 rounded-l-full rounded-r-none
-								text-xs md:text-base lg:text-lg h-10 lg:h-12 px-5 focus-visible:outline-0 "
+								text-xs md:text-base lg:text-lg h-9 lg:h-12 px-5 focus-visible:outline-0 "
 							/>
 						</div>
 						<Button
 							type="submit"
-							className="btn btn-primary h-10 lg:h-12 px-3 lg:px-6 rounded-r-full text-lg "
+							className="btn btn-primary h-9 lg:h-12 px-3 lg:px-6 rounded-r-full text-lg "
 						>
 							<IoMdSearch
 								style={{ width: "24px", height: "24px" }}

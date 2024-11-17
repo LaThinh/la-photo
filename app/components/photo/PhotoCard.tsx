@@ -61,14 +61,17 @@ export default function PhotoCard({ photo, isFavorite }: { photo: IPhoto; isFavo
 							src={brandLogo}
 							width={36}
 							height={36}
-							alt={brandName}
+							alt={""}
 							className="rounded-full aspect-square w-6 lg:w-8 xl:w-9 xl:h-9"
 						/>
 						<div className="brand-name hover:underline">{brandName}</div>
 					</Link>
 				</div>
 
-				<PhotoFavorite photo={photo} />
+				<PhotoFavorite
+					photo={photo}
+					className="absolute right-2 top-2 lg:transition-all lg:-right-20 lg:group-hover:right-2"
+				/>
 
 				<div className="image-download transition-all absolute right-2 z-50 -bottom-16 group-hover:bottom-2">
 					<Link
@@ -118,9 +121,12 @@ export default function PhotoCard({ photo, isFavorite }: { photo: IPhoto; isFavo
 						)}
 						<Photographer photo={photo} className="text-xs lg:text-sm xl:text-base" />
 					</div>
-					<div className="right-info mr-10 ">
+					<div className="right-info mr-10  text-xs lg:text-sm flex items-center">
 						{photo?.views && (
-							<span className="text-xs lg:text-sm">Views: {photo.views}</span>
+							<>
+								<span className="hidden 2xl:block">Views:</span>
+								<span className="">{photo.views}</span>
+							</>
 						)}
 					</div>
 				</div>

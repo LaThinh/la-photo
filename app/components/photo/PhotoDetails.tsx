@@ -170,11 +170,6 @@ export default function PhotoDetails({ photoId }: { photoId: string }) {
 							<GrNext className="!w-6 !h-6 text-gray-300 drop-shadow-2xl !p-0" />
 						</Button>
 
-						{!loading && (
-							<div className="favorite-icon absolute w-14 h-14 left-0 top-0 z-20">
-								<PhotoFavorite photo={jsonData[index]} />
-							</div>
-						)}
 						<div className="absolute z-50 bottom-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
 							<Button
 								className="autoplay p-0 rounded-full hover:bg-primary min-w-12 px-4 h-10 
@@ -198,7 +193,7 @@ export default function PhotoDetails({ photoId }: { photoId: string }) {
 						</h2>
 
 						<div className="photo-container flex-1 flex flex-col gap-3">
-							<div className="photographer flex items-center gap-2 lg:gap-3">
+							<div className="photographer relative flex items-center gap-2 lg:gap-3">
 								<div className="avatar w-8 lg:w-12 flex items-center justify-center aspect-square rounded-full">
 									{photo?.userImageURL ? (
 										<Image
@@ -217,6 +212,15 @@ export default function PhotoDetails({ photoId }: { photoId: string }) {
 									showLink
 									className="text-lg lg:text-xl xl:text-2xl"
 								/>
+
+								{!loading && (
+									<PhotoFavorite
+										photo={jsonData[index]}
+										className="absolute right-0 top-0 z-20 bg-pink-500/10 [&>svg]:!text-pink-600
+										 xl:w-12 xl:h-12 -xl:top-2
+										"
+									/>
+								)}
 							</div>
 
 							{photo?.tags && <PhotoTags tags={photo?.tags} />}
