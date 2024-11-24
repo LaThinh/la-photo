@@ -6,7 +6,6 @@ export default async function Home() {
 	// const client = createClient(process.env.PEXELS_API_KEY || "");
 	// const response: any = await client.photos.search({ query, per_page: 100 });
 	// const photos: IPhoto[] = response?.photos || [];
-
 	const result: any = await getSearchPhotos(query, 1);
 
 	return (
