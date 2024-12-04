@@ -13,7 +13,11 @@ const PhotoFavorite = dynamic(() => import("@components/photo/PhotoFavorite"), {
 });
 
 export default function PhotoCard({ photo, isFavorite }: { photo: IPhoto; isFavorite?: boolean }) {
-	const source: ImageSource = photo?.url ? ImageSource.Pexels : ImageSource.Pixabay;
+	const source: ImageSource = photo?.urls
+		? ImageSource.Unsplash
+		: photo?.url
+		? ImageSource.Pexels
+		: ImageSource.Pixabay;
 
 	let brandLogo = "";
 	let brandName = "";
@@ -23,9 +27,15 @@ export default function PhotoCard({ photo, isFavorite }: { photo: IPhoto; isFavo
 			brandLogo = "/icons/pexels-logo.svg";
 			brandName = "Pexels";
 			break;
+
 		case ImageSource.Pixabay:
 			brandLogo = "/icons/pixabay-logo-vector.svg";
 			brandName = "Pixabay";
+			break;
+
+		case ImageSource.Unsplash:
+			brandLogo = "/icons/unsplash.png";
+			brandName = "Unsplash";
 			break;
 	}
 
@@ -34,6 +44,10 @@ export default function PhotoCard({ photo, isFavorite }: { photo: IPhoto; isFavo
 	const pixabaySrc = isFavorite
 		? photo?.previewURL?.replace("_150", "_1280")
 		: photo?.webformatURL;
+
+	const pexelSrc = photo?.src?.large ? photo.src.large.replace("&h=650&w=940", "&w=800") : null;
+
+	const unsplashSrc = photo?.urls?.regular ? photo.urls.regular : null;
 
 	return (
 		<div className={`photo-card ${photoOrient} group`} data-animate="animate-fade-up">
@@ -46,7 +60,7 @@ export default function PhotoCard({ photo, isFavorite }: { photo: IPhoto; isFavo
 						width={photo?.width || photo?.imageWidth || "200"}
 						height={photo?.height || photo?.imageHeight || "200"}
 						alt={photo?.alt || photo?.tags || "Photo Image"}
-						src={photo?.src?.large || pixabaySrc || "/default.png"}
+						src={pexelSrc || pixabaySrc || unsplashSrc || "/default.png"}
 						className="main-photo min-h-36 object-cover"
 					/>
 				</Link>
@@ -62,7 +76,7 @@ export default function PhotoCard({ photo, isFavorite }: { photo: IPhoto; isFavo
 							width={36}
 							height={36}
 							alt={""}
-							className="rounded-full aspect-square w-6 lg:w-8 xl:w-9 xl:h-9"
+							className="rounded-full !aspect-square w-6 lg:w-8 xl:w-9 "
 						/>
 						<div className="brand-name hover:underline">{brandName}</div>
 					</Link>
@@ -97,7 +111,9 @@ export default function PhotoCard({ photo, isFavorite }: { photo: IPhoto; isFavo
 					className="tags absolute -right-72 transition-all group-hover:right-0 group-hover:bottom-10 lg:group-hover:bottom-12 
 					text-white text-[11px] lg:text-sm bg-slate-700/50 px-2 py-1"
 				>
-					<span className="line-clamp-1">{photo?.alt || photo?.tags}</span>
+					<span className="line-clamp-1">
+						{photo?.alt || photo?.alt_description || photo?.tags}
+					</span>
 				</div>
 			</div>
 			<div className="card-footer transition-all absolute left-0 right-0 -bottom-20 group-hover:bottom-0">
@@ -107,6 +123,15 @@ export default function PhotoCard({ photo, isFavorite }: { photo: IPhoto; isFavo
 							<Image
 								src={photo?.userImageURL}
 								alt={photo?.user || "User Photo"}
+								width="96"
+								height="96"
+								className="object-cover w-9 h-9 rounded-full"
+							/>
+						)}
+						{photo?.user?.profile_image && (
+							<Image
+								src={photo.user.profile_image?.small}
+								alt={photo.user?.name || "User Photo"}
 								width="96"
 								height="96"
 								className="object-cover w-9 h-9 rounded-full"

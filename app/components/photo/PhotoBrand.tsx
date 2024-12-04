@@ -4,7 +4,11 @@ import Link from "next/link";
 import React from "react";
 
 export default function PhotoBrand({ photo }: { photo: IPhoto }) {
-	const source: ImageSource = photo?.url ? ImageSource.Pexels : ImageSource.Pixabay;
+	const source: ImageSource = photo?.urls
+		? ImageSource.Unsplash
+		: photo?.url
+		? ImageSource.Pexels
+		: ImageSource.Pixabay;
 
 	let brandLogo = "";
 	let brandName = "";
@@ -18,12 +22,20 @@ export default function PhotoBrand({ photo }: { photo: IPhoto }) {
 			brandLogo = "/icons/pixabay-logo-vector.svg";
 			brandName = "Pixabay";
 			break;
+		case ImageSource.Unsplash:
+			brandLogo = "/icons/unsplash.png";
+			brandName = "Unsplash";
+			break;
 	}
 
 	return (
 		<div className="photo-brand">
 			<Link
-				href={photo?.url || photo?.pageURL || "/"}
+				href={
+					photo?.url || photo?.pageURL || photo?.slug
+						? "https://unsplash.com/photos/" + photo.slug
+						: "/"
+				}
 				title={`View in ${brandName}`}
 				target="_blank"
 				className="brand-icon flex gap-2 lg:gap-3 items-center"

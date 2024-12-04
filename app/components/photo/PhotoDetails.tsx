@@ -144,6 +144,7 @@ export default function PhotoDetails({ photoId }: { photoId: string }) {
 							alt={photo?.alt || photo?.tags || "Photo Image"}
 							src={
 								photo?.src?.large2x ||
+								photo?.urls?.regular ||
 								(paramFavorite == null
 									? photo?.largeImageURL
 									: photo?.previewURL?.replace("_150", "_1280")) ||
@@ -189,7 +190,7 @@ export default function PhotoDetails({ photoId }: { photoId: string }) {
 
 					<div className="photo-info w-full lg:w-1/3 lg:max-w-[540px] flex flex-col gap-2 md:gap-3 lg:gap-5 p-3 lg:p-5">
 						<h2 className="photo-title font-semibold font-Oswald text-xl lg:mt-4 lg:text-2xl xl:text-3xl capitalize">
-							{photo?.alt || photo?.tags || "Photo Title"}
+							{photo?.alt || photo?.alt_description || photo?.tags || "Photo Title"}
 						</h2>
 
 						<div className="photo-container flex-1 flex flex-col gap-3">
@@ -202,6 +203,14 @@ export default function PhotoDetails({ photoId }: { photoId: string }) {
 											width="96"
 											height="96"
 											className="object-cover  aspect-square rounded-full"
+										/>
+									) : photo?.user?.profile_image ? (
+										<Image
+											src={photo.user.profile_image?.medium}
+											alt={photo.user?.name || "User Photo"}
+											width="120"
+											height="120"
+											className="object-cover aspect-square rounded-full"
 										/>
 									) : (
 										<FaCameraRetro className="w-8 h-8" />
@@ -225,9 +234,15 @@ export default function PhotoDetails({ photoId }: { photoId: string }) {
 
 							{photo?.tags && <PhotoTags tags={photo?.tags} />}
 
-							{photo?.views && (
+							{photo?.description && (
+								<div className="photo-desc text-lg lg:text-xl">
+									{photo.description}
+								</div>
+							)}
+
+							{photo?.likes && (
 								<div className="photo-static flex gap-4 lg:flex-col lg:mt-5 text-gray-700">
-									{photo?.likes && (
+									{photo?.likes && photo.likes > 0 && (
 										<div className="photo-likes ">Likes: {photo.likes}</div>
 									)}
 
@@ -254,6 +269,7 @@ export default function PhotoDetails({ photoId }: { photoId: string }) {
 									download
 									href={
 										photo.src?.original ||
+										photo?.urls?.full ||
 										photo?.largeImageURL + "?attachment=" ||
 										"/"
 									}

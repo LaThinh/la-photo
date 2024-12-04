@@ -49,9 +49,13 @@ export interface IPhoto {
 	webformatURL?: string;
 	previewURL?: string;
 	alt?: string;
+	alt_description?: string;
 	tags?: string;
 	url?: string;
+	slug?: string;
 	pageURL?: string;
+	urls?: IUnsplashUrls;
+	description?: string;
 
 	liked?: boolean;
 	likes?: number;
@@ -64,7 +68,7 @@ export interface IPhoto {
 	photographer_url?: string;
 	photographer_id?: number;
 	user_id?: number;
-	user?: string;
+	user?: any;
 	userImageURL: string;
 }
 
@@ -79,6 +83,14 @@ export interface IPexelImage {
 	tiny: string;
 }
 
+export interface IUnsplashUrls {
+	raw: string;
+	full: string;
+	regular: string;
+	small: string;
+	thumb: string;
+}
+
 export interface IPexelsResult {
 	page: number;
 	per_page: number;
@@ -91,6 +103,12 @@ export interface IPixabayResult {
 	total: number;
 	totalHits: number;
 	hits: IPhoto[];
+}
+
+export interface IUnsplashResult {
+	total: number;
+	total_pages: number;
+	results: IPhoto[];
 }
 
 export enum ImageSource {

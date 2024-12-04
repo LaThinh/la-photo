@@ -13,8 +13,7 @@ export default function Photographer({
 }) {
 	return (
 		<div className={`photographer ${showLink ? "hover:text-primary" : ""} ${className}`}>
-			{photo?.user &&
-				photo?.user_id &&
+			{photo?.user_id &&
 				(showLink ? (
 					<Link
 						href={`https://pixabay.com/users/${photo.user}-${photo.user_id}`}
@@ -25,6 +24,20 @@ export default function Photographer({
 					</Link>
 				) : (
 					<>{photo.user}</>
+				))}
+
+			{photo?.user &&
+				photo.user?.name &&
+				(showLink ? (
+					<Link
+						href={`https://unsplash.com/@${photo.user?.username}`}
+						title={`View Photographer ${photo.user.name} in Unsplash`}
+						target="_blank"
+					>
+						{photo.user.name}
+					</Link>
+				) : (
+					<>{photo.user.name}</>
 				))}
 
 			{photo?.photographer &&
