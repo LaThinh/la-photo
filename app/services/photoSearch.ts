@@ -15,9 +15,9 @@ export const unsplashAPI = `https://api.unsplash.com/search/photos?client_id=${
 export const revalidate = 3600; // invalidate every hour
 
 export const getSearchPexels = async (query: string, page?: number) => {
-	// const q = encodeURIComponent(query);
+	const q = decodeURI(query);
 	const p = page || 1;
-	const url = `https://api.pexels.com/v1/search?query=${query}&per_page=80&page=${p}`;
+	const url = `https://api.pexels.com/v1/search?query="${q}"&per_page=80&page=${p}`;
 
 	console.log(url);
 

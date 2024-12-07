@@ -269,7 +269,7 @@ export default function PhotoDetails({ photoId }: { photoId: string }) {
 									download
 									href={
 										photo.src?.original ||
-										photo?.urls?.full + "&attachment=" ||
+										photo?.urls?.full ||
 										photo?.largeImageURL + "?attachment=" ||
 										"/"
 									}
