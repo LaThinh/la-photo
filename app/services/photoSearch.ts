@@ -47,7 +47,6 @@ export const getSearchPixabay = async (query: string, page?: number) => {
 };
 
 export const getSearchUnsplash = async (query: string, page?: number) => {
-	// const q = encodeURIComponent(query);
 	const p = page || 1;
 	const url = `${unsplashAPI}&query=${query}&per_page=30&page=${p}`;
 	const res = await fetch(url, {

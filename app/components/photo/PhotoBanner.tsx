@@ -45,6 +45,7 @@ export default function PhotoBanner({
 				src={
 					photo.src?.landscape ||
 					photo?.previewURL?.replace("_150", "_1280") ||
+					photo?.urls?.full ||
 					"/default.png"
 				}
 				width="3000"
@@ -60,6 +61,7 @@ export default function PhotoBanner({
 			>
 				<div className="photo-date date text-xs text-gray-200">
 					{photo?.previewURL && <div>Date: {extractDate(photo.previewURL)}</div>}
+					{photo?.created_at && <div>Date: {photo.created_at} </div>}
 				</div>
 				<div className="photographer-info flex gap-1">
 					{`Photo by:`}

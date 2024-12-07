@@ -21,21 +21,25 @@ export default function PhotoCard({ photo, isFavorite }: { photo: IPhoto; isFavo
 
 	let brandLogo = "";
 	let brandName = "";
+	let brandURL = "";
 
 	switch (source) {
 		case ImageSource.Pexels:
 			brandLogo = "/icons/pexels-logo.svg";
 			brandName = "Pexels";
+			brandURL = photo?.url || "/";
 			break;
 
 		case ImageSource.Pixabay:
 			brandLogo = "/icons/pixabay-logo-vector.svg";
 			brandName = "Pixabay";
+			brandURL = photo?.pageURL || "/";
 			break;
 
 		case ImageSource.Unsplash:
 			brandLogo = "/icons/unsplash.png";
 			brandName = "Unsplash";
+			brandURL = "https://unsplash.com/photos/" + photo.slug;
 			break;
 	}
 
@@ -66,7 +70,7 @@ export default function PhotoCard({ photo, isFavorite }: { photo: IPhoto; isFavo
 				</Link>
 				<div className="image-source absolute transition-all top-2 -left-16 group-hover:left-2 aspect-square">
 					<Link
-						href={photo?.url || photo?.pageURL || "/"}
+						href={brandURL}
 						title={`View in ${brandName}`}
 						target="_blank"
 						className="brand-logo"

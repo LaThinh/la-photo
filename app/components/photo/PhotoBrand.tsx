@@ -12,30 +12,34 @@ export default function PhotoBrand({ photo }: { photo: IPhoto }) {
 
 	let brandLogo = "";
 	let brandName = "";
+	let brandURL = "/";
+
+	console.log(photo);
 
 	switch (source) {
 		case ImageSource.Pexels:
 			brandLogo = "/icons/pexels-logo.svg";
 			brandName = "Pexels";
+			brandURL = photo?.url || "/";
 			break;
+
 		case ImageSource.Pixabay:
 			brandLogo = "/icons/pixabay-logo-vector.svg";
 			brandName = "Pixabay";
+			brandURL = photo?.pageURL || "/";
 			break;
+
 		case ImageSource.Unsplash:
 			brandLogo = "/icons/unsplash.png";
 			brandName = "Unsplash";
+			brandURL = "https://unsplash.com/photos/" + photo.slug;
 			break;
 	}
 
 	return (
 		<div className="photo-brand">
 			<Link
-				href={
-					photo?.url || photo?.pageURL || photo?.slug
-						? "https://unsplash.com/photos/" + photo.slug
-						: "/"
-				}
+				href={brandURL}
 				title={`View in ${brandName}`}
 				target="_blank"
 				className="brand-icon flex gap-2 lg:gap-3 items-center"

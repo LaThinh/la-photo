@@ -14,7 +14,6 @@ const observer = new IntersectionObserver(
 					// "animate-fade-up",
 					// "animate-delay-300",
 					// "animate-duration-1000"
-
 					classAttr
 				);
 
@@ -31,7 +30,7 @@ const observer = new IntersectionObserver(
 );
 
 export default function AnimationScript() {
-	if (typeof window !== "undefined") {
+	if (typeof window !== "undefined" && window.innerWidth > 1280) {
 		setTimeout(() => {
 			// const cards = document.querySelectorAll(".animation");
 			const cards = document.querySelectorAll("[data-animate]");

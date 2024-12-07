@@ -6,12 +6,13 @@ import { IPhoto, ISearchResult } from "@/app/libs/interface";
 import dynamic from "next/dynamic";
 import PhotoGrid from "@components/photo/PhotoGrid";
 import Loading from "./Loading";
-import { CiGrid2V, CiGrid42 } from "react-icons/ci";
+// import { CiGrid2V, CiGrid42 } from "react-icons/ci";
 import PhotoList from "./photo/PhotoList";
 import FormSearch from "./FormSearch";
 import { useSearchParams } from "next/navigation";
 import { actionSearchPhoto } from "../action/searchPhoto";
 import { Button } from "@/components/ui/button";
+import { TfiLayoutGrid2Alt, TfiLayoutGrid4Alt } from "react-icons/tfi";
 
 const AnimationScript = dynamic(() => import("@components/AnimationScript"), { ssr: false });
 const PhotoBanner = dynamic(() => import("@components/photo/PhotoBanner"), {
@@ -137,15 +138,16 @@ export default function SearchComponent({ q, result }: { q?: string; result?: IS
 								"Welcome to La Photos"
 							)}
 						</h3>
-						<div className="result-view flex items-center gap-2">
-							<CiGrid2V
+						<div className="result-view flex items-center gap-2 text-gray-500">
+							<strong className="hidden lg:block">View: </strong>
+							<TfiLayoutGrid4Alt
 								className={`grid-view h-8 w-8 ${
 									gridView === "list" ? "text-primary" : "cursor-pointer"
 								}`}
 								title="Small View"
 								onClick={() => handleChangeGridView("list")}
 							/>
-							<CiGrid42
+							<TfiLayoutGrid2Alt
 								className={`grid-view h-8 w-8 ${
 									gridView === "grid" ? "text-primary" : "cursor-pointer"
 								}`}

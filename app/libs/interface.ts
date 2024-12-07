@@ -44,6 +44,7 @@ export interface IPhoto {
 	height?: number;
 	imageWidth?: number;
 	imageHeight?: number;
+
 	src?: IPexelImage;
 	largeImageURL?: string;
 	webformatURL?: string;
@@ -56,6 +57,7 @@ export interface IPhoto {
 	pageURL?: string;
 	urls?: IUnsplashUrls;
 	description?: string;
+	created_at?: string;
 
 	liked?: boolean;
 	likes?: number;

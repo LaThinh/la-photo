@@ -1,4 +1,5 @@
 # Getting Started La Photo
+
 ![image](https://github.com/user-attachments/assets/62ff1c6d-adbc-4fc9-a3d1-26c060a7220f)
 
 ### Search Photos. Web App use Nextjs 15, TailwindCSS, Pixabay API, Pexels API
@@ -16,12 +17,15 @@
 Link Demo: https://photo.laquocthinh.com/
 
 ## Google Speed
-Link Result: https://pagespeed.web.dev/analysis/https-photo-laquocthinh-com/oostgt4j5m?form_factor=mobile 
+
+Link Result: https://pagespeed.web.dev/analysis/https-photo-laquocthinh-com/oostgt4j5m?form_factor=mobile
 
 ### Mobile
+
 ![image](https://github.com/user-attachments/assets/b4055746-47ab-49e6-b245-b0d0ed2a879d)
 
 ### Desktop
+
 ![image](https://github.com/user-attachments/assets/dcca7e25-99d5-4b70-9a83-f04427bb3e1b)
 
 First, run the development server:
@@ -32,10 +36,11 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 .env example:
 PEXELS_API_KEY=xxx
 PIXABAY_API_KEY=xxx
+UNSPLASH_API_KEY=xxx
 ```
 
-Get API Key in here: 
-https://www.pexels.com/api/ 
+Get API Key in here:
+https://www.pexels.com/api/
 https://pixabay.com/service/about/api/
 
 ```bash
@@ -58,8 +63,8 @@ This project uses [`next/font`](https://nextjs.org/docs/app/building-your-applic
 
 To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+-   [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+-   [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
